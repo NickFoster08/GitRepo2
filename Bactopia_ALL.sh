@@ -32,11 +32,10 @@ bactopia prepare \
   --pe2-pattern '_2.fastq' \
   --species "Mycobacterium bovis" \
   --genome-size 4400000 \
-  --output prepare_output
-
+  
 # Run Bactopia
 bactopia \
-  --samples prepare_output/samples.csv \
+  --samples samples.csv \
   --coverage 100 \
   --max_cpus 4 \
   --outdir "$OUTDIR"
