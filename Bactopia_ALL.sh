@@ -29,7 +29,7 @@ cd "$OUTDIR"
 # Prepare FOFN
 bactopia prepare \
   --path /home/nf26742/All_Seqs/All_Renamed \
-  --fastq_ext .fastq \
+  --fastq-ext .fastq \
   --pe1_pattern '_1.fastq' \
   --pe2_pattern '_2.fastq' \
   --species "Mycobacterium bovis" \
