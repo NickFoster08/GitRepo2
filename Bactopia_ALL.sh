@@ -31,11 +31,11 @@ bactopia prepare \
   --pe1-pattern '_1.fastq' \
   --pe2-pattern '_2.fastq' \
   --species "Mycobacterium bovis" \
-  --genome-size 4400000 \
+  --genome-size 4400000 
   
 # Run Bactopia
 bactopia \
-  --samples samples.csv \
+  --path /home/nf26742/All_Seqs/All_Renamed \
   --coverage 100 \
   --max_cpus 4 \
   --outdir "$OUTDIR"
