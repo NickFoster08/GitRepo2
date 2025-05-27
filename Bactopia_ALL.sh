@@ -3,7 +3,7 @@
 #SBATCH --partition=batch             # Partition (queue) name
 #SBATCH --ntasks=1                    # Run on a single CPU
 #SBATCH --cpus-per-task=4             #number of cores per task
-#SBATCH --mem=40gb                     # Job memory request
+#SBATCH --mem=40GB                     # Job memory request
 #SBATCH --time=02-00:00:00               # Time limit hrs:min:sec
 #SBATCH --output=/scratch/nf26742/scratch/log.%j.out    # Standard output log
 #SBATCH --error=/scratch/nf26742/scratch/log.%j.err     # Standard error log
@@ -37,7 +37,8 @@ bactopia prepare \
 bactopia \
  --samples $OUTDIR/samples.txt \
  --coverage 100 \
- --outdir $OUTDIR/local-multiple-samples \
  --max_cpus 4 \
  --outdir "$OUTDIR"
-# test
+
+ #create summary files from bactopia pipeline on samples
+bactopia summary --bactopia-path $OUTDIR/
