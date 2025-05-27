@@ -11,7 +11,6 @@
 #SBATCH --mail-type=END,FAIL          # Mail events (NONE, BEGIN, END, FAIL, ALL)
 #SBATCH --mail-user=nf26742@uga.edu  # Where to send mail (change username@uga.edu to your email address)
 
-set -euo pipefail
 
 # Set output directory variable
 OUTDIR="/scratch/nf26742/rerun_2025/job_${SLURM_JOB_ID}"
@@ -26,19 +25,18 @@ module load Bactopia/3.1.0
 cd "$OUTDIR"
 
 # Prepare FOFN
-bactopia prepare \
+#bactopia prepare \
   --path /home/nf26742/All_Seqs/All_Renamed \
-  --fastq-ext .fastq \
   --species "Mycobacterium bovis" \
   --genome-size 4400000 \
   > $OUTDIR/samples.txt
   
 # Run Bactopia
-bactopia \
- --samples $OUTDIR/samples.txt \
- --coverage 100 \
- --max_cpus 4 \
- --outdir "$OUTDIR"
+#bactopia \
+ #--samples $OUTDIR/samples.txt \
+ #--coverage 100 \
+ #--max_cpus 4 \
+# --outdir "$OUTDIR"
 
  #create summary files from bactopia pipeline on samples
-bactopia summary --bactopia-path $OUTDIR/
+#bactopia summary --bactopia-path $OUTDIR/
