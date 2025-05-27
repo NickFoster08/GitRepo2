@@ -42,3 +42,4 @@ bactopia \
  --outdir $OUTDIR/local-multiple-samples \
  --max_cpus 4 \
  --outdir "$OUTDIR"
+# test
