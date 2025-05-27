@@ -29,8 +29,8 @@ cd "$OUTDIR"
 bactopia prepare \
   --path /home/nf26742/All_Seqs/All_Renamed \
   --fastq-ext .fastq \
- --pe1-pattern _1.fastq \
- --pe2-pattern _2.fastq \
+ --pe1-pattern _R1.fastq \
+ --pe2-pattern _R2.fastq \
   --species "Mycobacterium bovis" \
   --genome-size 4400000 \
   > $OUTDIR/samples.txt
