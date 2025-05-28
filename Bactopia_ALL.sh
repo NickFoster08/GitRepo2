@@ -25,7 +25,7 @@ module load Bactopia/3.1.0
 cd "$OUTDIR"
 
 # Prepare FOFN
-#bactopia prepare \
+bactopia prepare \
   --path /home/nf26742/All_Seqs/All_Renamed \
   --species "Mycobacterium bovis" \
   --genome-size 4400000 \
