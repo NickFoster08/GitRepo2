@@ -32,11 +32,11 @@ bactopia prepare \
   > $OUTDIR/samples.txt
   
 # Run Bactopia
-#bactopia \
- #--samples $OUTDIR/samples.txt \
- #--coverage 100 \
- #--max_cpus 4 \
-# --outdir "$OUTDIR"
+bactopia \
+ --samples $OUTDIR/samples.txt \
+ --coverage 100 \
+ --max_cpus 4 \
+ --outdir "$OUTDIR"
 
  #create summary files from bactopia pipeline on samples
 #bactopia summary --bactopia-path $OUTDIR/
