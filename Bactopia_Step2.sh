@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=Bactopia_Bioproject        # Job name
+#SBATCH --job-name=Bactopia_Step2_Bioproject        # Job name
 #SBATCH --partition=batch             # Partition (queue) name
 #SBATCH --ntasks=1                    # Run on a single CPU
 #SBATCH --cpus-per-task=4             #number of cores per task
@@ -11,32 +11,5 @@
 #SBATCH --mail-type=END,FAIL          # Mail events (NONE, BEGIN, END, FAIL, ALL)
 #SBATCH --mail-user=nf26742@uga.edu  # Where to send mail (change username@uga.edu to your email address)
 
-
-# Set output directory variable
-OUTDIR="/scratch/nf26742/rerun_2025/job_${SLURM_JOB_ID}"
-
-# Make output directory if it doesn't exist
-mkdir -p "$OUTDIR"
-
-# Load modules
-module load Bactopia/3.1.0
-
-# Move to working directory
-cd "$OUTDIR"
-
-# Prepare FOFN
-bactopia prepare \
-  --path /lustre2/scratch/nf26742/AllFastqs_UPDATED25 \
-  --species "Mycobacterium bovis" \
-  --genome-size 4400000 \
-  > $OUTDIR/samples.txt
-  
-# Run Bactopia
-bactopia \
- --samples $OUTDIR/samples.txt \
- --coverage 100 \
- --max_cpus 4 \
- --outdir "$OUTDIR"
-
  #Create summary files from bactopia pipeline on samples
-bactopia summary --bactopia-path /scratch/nf26742/rerun_2025/job_37426847
+bactopia summary --bactopia-path /scratch/nf26742/rerun_2025/job_37426847/samples.txt
