@@ -11,5 +11,8 @@
 #SBATCH --mail-type=END,FAIL          # Mail events (NONE, BEGIN, END, FAIL, ALL)
 #SBATCH --mail-user=nf26742@uga.edu  # Where to send mail (change username@uga.edu to your email address)
 
+#Load Bactopia
+module load Bactopia/3.1.0
+
  #Create summary files from bactopia pipeline on samples
 bactopia summary --bactopia-path /scratch/nf26742/rerun_2025/job_37426847/samples.txt
