@@ -16,4 +16,4 @@ module load Bactopia/3.1.0
 
  #Create summary files from bactopia pipeline on samples
 bactopia summary \
-    --bactopia-path /scratch/nf26742/rerun_2025/job_37426847/
+    --bactopia-path /scratch/nf26742/Bactopia_Reports
