@@ -29,11 +29,11 @@ bactopia prepare \
   --path /lustre2/scratch/nf26742/AllFastqs_UPDATED25 \
   --species "Mycobacterium bovis" \
   --genome-size 4400000 \
-  > $OUTDIR/samples.txt2
+  > $OUTDIR/samples.txt
   
 # Run Bactopia
 bactopia \
- --samples $OUTDIR/samples.txt2 \
+ --samples $OUTDIR/samples.txt \
  --coverage 100 \
  --max_cpus 4 \
  --outdir "$OUTDIR"
