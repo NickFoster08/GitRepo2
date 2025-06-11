@@ -11,9 +11,20 @@
 #SBATCH --mail-type=END,FAIL          # Mail events (NONE, BEGIN, END, FAIL, ALL)
 #SBATCH --mail-user=nf26742@uga.edu  # Where to send mail (change username@uga.edu to your email address)
 
+#Specify outdir
+OUTDIR=/scratch/nf26742/Bactopia_Reports/run2
+
+#Tells the program to make the ourdir folder if it cant find it
+if [ ! -d $OUTDIR ] 
+then
+    mkdir -p $OUTDIR
+fi
+
 #Load Bactopia
 module load Bactopia/3.1.0
 
- #Create summary files from bactopia pipeline on samples
-bactopia summary \
-    --bactopia-path /scratch/nf26742/Bactopia_Reports/run2
+#move to workdir
+cd $OUTDIR
+
+#Create summary files from bactopia pipeline on samples
+bactopia summary --bactopia-path /scratch/nf26742/Bactopia_Reports/run2
