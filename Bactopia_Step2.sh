@@ -28,4 +28,4 @@ cd /scratch/nf26742/Bactopia_Reports/run2
 
 #Create summary files from bactopia pipeline on samples
 bactopia summary \
-    --bactopia-path /scratch/nf26742/Bactopia_Reports/run2/samples.txt
+    --bactopia-path /scratch/nf26742/Bactopia_Reports/run2
