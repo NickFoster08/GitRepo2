@@ -30,6 +30,6 @@ cd $OUTDIR
 #Bactopia tools
 bactopia \
     --wf snippy \
-    --refrence $REFERENCE \
+    --reference $REFERENCE \
     --exclude $OUTDIR/bactopia-exclude.tsv \
     --bactopia $OUTDIR
