@@ -26,8 +26,6 @@ fi
 
 #Load modules
 module load snpEff/5.0e-GCCcore-11.3.0-Java-11
-module load java-11
-
 
 #move to workdir
 cd $OUTDIR
