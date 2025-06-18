@@ -37,10 +37,19 @@ GENOME_NAME="AF2122"
 ANNOTATED_VCF="$OUTDIR/core-snp.ann.vcf"
 STATS_HTML="$OUTDIR/snpeff_summary.html"
 
+# Fix chromosome names in VCF to match SnpEff database
+VCF_FIXED="$OUTDIR/core-snp.fixed.vcf"
+
+awk 'BEGIN{OFS="\t"} 
+    /^#/ {print; next} 
+    {if($1 == "NC_002945") $1 = "NC_002945.4"; print}' \
+    $VCF_INPUT > $VCF_FIXED
+
 # ---- RUN SNPEFF ----
 java -Xmx16g -jar /home/nf26742/SNPEFF_DataBase/snpEff/snpEff.jar \
     -c /home/nf26742/SNPEFF_DataBase/snpEff/snpEff.config \
     -v -stats $STATS_HTML \
-    $GENOME_NAME $VCF_INPUT > $ANNOTATED_VCF
+ $GENOME_NAME $VCF_FIXED > $ANNOTATED_VCF
+
 
 
