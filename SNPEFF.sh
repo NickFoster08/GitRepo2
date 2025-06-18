@@ -14,8 +14,6 @@
 #Exit on error immediatley 
 set -e
 
-REFERENCE=/home/nf26742/vsnp3_test_dataset/vsnp_dependencies/Mycobacterium_AF2122
-
 OUTDIR=/scratch/nf26742/rerun_2025/job_37864473
 
 #Tells the program to make the ourdir folder if it cant find it
@@ -39,7 +37,9 @@ ANNOTATED_VCF="$OUTDIR/core-snp.ann.vcf"
 STATS_HTML="$OUTDIR/snpeff_summary.html"
 
 # ---- RUN SNPEFF ----
-java -Xmx16g -jar $EBROOTSNPEFF/snpEff.jar \
+java -Xmx16g -jar /home/nf26742/SNPEFF_DataBase/snpEff/snpEff.jar \
+    -c /home/nf26742/SNPEFF_DataBase/snpEff/snpEff.config \
     -v -stats $STATS_HTML \
     $GENOME_NAME $VCF_INPUT > $ANNOTATED_VCF
+
 
