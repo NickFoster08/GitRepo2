@@ -44,11 +44,13 @@ awk 'BEGIN {OFS="\t"} \
     length($4)==1 && length($5)==1 && $5 ~ /^[ACGT]$/ {print}' \
     $VCF_INPUT > $CLEAN_VCF
 
-# Step 2: Fix chromosome names in cleaned VCF to match snpEff database
+# Step 2: Fix chromosome names in VCF header and variant lines to match snpEff database
+
+# Replace contig header line "##contig=<ID=1,...>" with "##contig=<ID=NC_002945.4,...>"
+sed 's/##contig=<ID=1,/##contig=<ID=NC_002945.4,/' $CLEAN_VCF | \
 awk 'BEGIN{OFS="\t"} 
     /^#/ {print; next} 
-    {if($1 == "NC_002945") $1 = "NC_002945.4"; print}' \
-    $CLEAN_VCF > $VCF_FIXED
+    {if($1 == "1") $1 = "NC_002945.4"; print}' > $VCF_FIXED
 
 # Step 3: Run snpEff annotation
 java -Xmx16g -jar /home/nf26742/SNPEFF_DataBase/snpEff/snpEff.jar \
