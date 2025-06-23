@@ -34,8 +34,8 @@ GENOME_NAME="AF2122"
 
 # ---- OUTPUTS ----
 CLEAN_VCF="$OUTDIR/core-snp.snpeff_ready.vcf"
-VCF_FIXED="$OUTDIR/core-snp.fixed2.vcf"
-ANNOTATED_VCF="$OUTDIR/core-snp.ann2.vcf"
+VCF_FIXED="$OUTDIR/core-snp.fixed3.vcf"
+ANNOTATED_VCF="$OUTDIR/core-snp.ann3.vcf"
 STATS_HTML="$OUTDIR/snpeff_summary.html"
 
 # Step 1: Clean VCF to keep only simple SNPs (no indels or complex alleles)
