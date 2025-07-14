@@ -46,10 +46,10 @@ while IFS= read -r line; do
 
     # Once all are set, rename files
     if [[ -n $SRR && -n $LOCATION && -n $HOST && -n $YEAR ]]; then
-        OLD1="$FASTQ_DIR/${SRR}_1.fastq.gz"
-        OLD2="$FASTQ_DIR/${SRR}_2.fastq.gz"
-        NEW1="$FASTQ_DIR/${LOCATION}_${YEAR}_${HOST}_${SRR}_1.fastq.gz"
-        NEW2="$FASTQ_DIR/${LOCATION}_${YEAR}_${HOST}_${SRR}_2.fastq.gz"
+        OLD1="$FASTQ_DIR/${SRR}_1.fastq"
+        OLD2="$FASTQ_DIR/${SRR}_2.fastq"
+        NEW1="$FASTQ_DIR/${LOCATION}_${YEAR}_${HOST}_${SRR}_1.fastq"
+        NEW2="$FASTQ_DIR/${LOCATION}_${YEAR}_${HOST}_${SRR}_2.fastq"
 
         # Rename only if files exist
         if [[ -f $OLD1 && -f $OLD2 ]]; then
