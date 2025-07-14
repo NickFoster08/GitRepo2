@@ -1,74 +1,69 @@
-#!/usr/bin/env python3
 import os
 import re
-import sys
 
-# Check usage
-if len(sys.argv) != 3:
-    print("Usage: ./rename_fastq.py metadata.txt /path/to/fastq_dir")
-    sys.exit(1)
+metadata_file = "/scratch/nf26742/Spain_WL/Full_Spain_WL_List.txt"
+files_dir = "/scratch/nf26742/Spain_WL"
 
-metadata_file = sys.argv[1]
-fastq_dir = sys.argv[2]
-
-# Read metadata file
+# Load full metadata text
 with open(metadata_file, "r") as f:
     content = f.read()
 
-# Parse metadata entries by splitting on lines that start with a number and colon (e.g., '1:')
-entries = re.split(r"\n\d+:\s", "\n" + content)
+# Split entries by number + colon (e.g. "108:")
+entries = re.split(r'\n(?=\d+:)', content)
 
-# Store info keyed by SRR ID
-metadata = {}
+# Build a dict to map sample ID to metadata prefix info
+metadata_map = {}
 
 for entry in entries:
-    # Extract SRR ID - look for lines like "SRA: SRR18391669" or similar (adapt if your metadata differs)
-    sra_match = re.search(r"SRA:\s*(SRR\d+)", entry)
-    if not sra_match:
+    biosample_match = re.search(r'BioSample:\s*(SAMN\d+)', entry)
+    if not biosample_match:
         continue
-    srr_id = sra_match.group(1)
+    biosample_id = biosample_match.group(1)
 
-    # Extract collection date
-    collection_date_match = re.search(r'/collection date="([^"]+)"', entry)
-    if not collection_date_match:
-        continue
-    collection_date = collection_date_match.group(1)
-    year = collection_date.split("-")[0]
+    # Extract fields for prefix: Country, Host, Year
+    # Adjust regex if your metadata fields are named differently
+    country_match = re.search(r'/geographic location="([^"]+)"', entry)
+    country = country_match.group(1).split(":")[-1].strip().replace(" ", "_") if country_match else "UnknownCountry"
 
-    # Extract geographic location (country)
-    geo_match = re.search(r'/geographic location="([^"]+)"', entry)
-    if not geo_match:
-        continue
-    geo = geo_match.group(1).replace(" ", "_")
-
-    # Extract host
     host_match = re.search(r'/host="([^"]+)"', entry)
-    if not host_match:
+    host = host_match.group(1).replace(" ", "_") if host_match else "UnknownHost"
+
+    date_match = re.search(r'/collection date="([^"]+)"', entry)
+    year = "UnknownYear"
+    if date_match:
+        year = date_match.group(1).split("-")[0]  # just take year part
+
+    # Create prefix string
+    prefix = f"{country}_{host}_{year}"
+
+    # Save in dict keyed by BioSample ID
+    metadata_map[biosample_id] = prefix
+
+# Now rename files in folder based on metadata prefix
+for filename in os.listdir(files_dir):
+    # Check if filename matches SAMN ID pattern with optional _R1/_R2 and extensions
+    # Example filenames: SAMN12345678.fastq.gz or SAMN12345678_R1.fastq.gz
+    match = re.match(r'(SAMN\d+)(.*)(\.fastq(?:\.gz)?|\.fq(?:\.gz)?)$', filename)
+    if not match:
         continue
-    host = host_match.group(1).replace(" ", "_")
 
-    metadata[srr_id] = {
-        "year": year,
-        "geo": geo,
-        "host": host,
-    }
+    sample_id = match.group(1)
+    rest = match.group(2)    # e.g., "_R1"
+    ext = match.group(3)     # e.g., ".fastq.gz"
 
-# Now rename FASTQ files
-for filename in os.listdir(fastq_dir):
-    # Match files starting with SRR and possibly ending with .fastq or .fastq.gz
-    fastq_match = re.match(r"(SRR\d+)(_.*\.fastq(?:\.gz)?)", filename)
-    if fastq_match:
-        srr_id = fastq_match.group(1)
-        suffix = fastq_match.group(2)
+    if sample_id not in metadata_map:
+        print(f"No metadata for {sample_id}, skipping {filename}")
+        continue
 
-        if srr_id in metadata:
-            meta = metadata[srr_id]
-            new_name = f"{meta['geo']}_{meta['host']}_{meta['geo']}_{meta['year']}_{srr_id}{suffix}"
-            old_path = os.path.join(fastq_dir, filename)
-            new_path = os.path.join(fastq_dir, new_name)
-            print(f"Renaming:\n  {filename}\n  --> {new_name}\n")
-            os.rename(old_path, new_path)
-        else:
-            print(f"Warning: No metadata found for {srr_id}, skipping file {filename}")
+    prefix = metadata_map[sample_id]
 
-print("All done.")
+    new_filename = f"{prefix}_{filename}"
+    old_path = os.path.join(files_dir, filename)
+    new_path = os.path.join(files_dir, new_filename)
+
+    if os.path.exists(new_path):
+        print(f"Warning: {new_filename} already exists, skipping")
+        continue
+
+    print(f"Renaming {filename} -> {new_filename}")
+    os.rename(old_path, new_path)
