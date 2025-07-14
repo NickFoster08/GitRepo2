@@ -192,31 +192,39 @@ SAMN14447208
 SAMN14447205
 )
 for biosample in "${accessions[@]}"; do
-    echo "Processing BioSample: $biosample"
+    echo "Processing $biosample"
 
-    # Get linked SRA Run accessions (SRR) for this BioSample
-    srr_list=$(esearch -db biosample -query "$biosample" | elink -target sra | efetch -format runinfo | cut -d',' -f1 | grep '^SRR')
+    srr_list=$(esearch -db biosample -query "$biosample" \
+        | elink -target sra \
+        | efetch -format runinfo \
+        | cut -d',' -f1 | grep '^SRR')
 
     if [[ -z "$srr_list" ]]; then
-        echo "No SRA runs found for $biosample"
+        echo "⚠️  No SRR found for $biosample"
         continue
     fi
 
-    # Loop over SRR runs and download/convert
     for srr in $srr_list; do
-        echo "Downloading SRR: $srr"
+        echo "🔄 Downloading $srr from NCBI"
 
-        prefetch "$srr"
+        fasterq-dump "$srr" -O "$OUTDIR" --threads 8
         if [[ $? -eq 0 ]]; then
-            echo "Successfully downloaded $srr"
-            fasterq-dump "$srr" -O "$OUTDIR" --threads 8
-            if [[ $? -eq 0 ]]; then
-                echo "Successfully converted $srr to FASTQ"
-            else
-                echo "Error converting $srr to FASTQ"
-            fi
+            echo "✅ Successfully downloaded and converted $srr"
         else
-            echo "Error downloading $srr"
+            echo "⚠️  NCBI failed, trying ENA for $srr"
+
+            # Get first 6 characters to construct ENA FTP path
+            prefix=$(echo "$srr" | cut -c1-6)
+            url="https://ftp.sra.ebi.ac.uk/vol1/fastq/${prefix}/${srr}/${srr}_1.fastq.gz"
+
+            wget -P "$OUTDIR" "$url"
+            wget -P "$OUTDIR" "${url/_1/_2}"
+            
+            if [[ -f "$OUTDIR/${srr}_1.fastq.gz" ]]; then
+                echo "✅ Downloaded $srr from ENA"
+            else
+                echo "❌ Failed to download $srr from both NCBI and ENA"
+            fi
         fi
     done
 done
