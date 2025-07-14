@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=Spain_Rename
+#SBATCH --job-name=Spain_Rename_bash
 #SBATCH --partition=batch
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=8
