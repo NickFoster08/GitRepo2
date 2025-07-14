@@ -1,4 +1,14 @@
 #!/bin/bash
+#SBATCH --job-name=Metdata_extract
+#SBATCH --partition=batch
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=8
+#SBATCH --mem=80gb
+#SBATCH --time=00-12:00:00
+#SBATCH --output=/scratch/nf26742/scratch/log.%j.out
+#SBATCH --error=/scratch/nf26742/scratch/log.%j.err
+#SBATCH --mail-type=END,FAIL
+#SBATCH --mail-user=nf26742@uga.edu
 
 INPUT_FILE="/scratch/nf26742/Spain_WL/Full_Spain_WL_List.txt"
 OUTPUT_FILE="/scratch/nf26742/Spain_WL/Spain_Metadata_Parsed.tsv"
