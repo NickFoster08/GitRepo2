@@ -67,3 +67,5 @@ for filename in os.listdir(files_dir):
 
     print(f"Renaming {filename} -> {new_filename}")
     os.rename(old_path, new_path)
+print("Script started")
+print(f"Metadata file: {metadata_file}")
