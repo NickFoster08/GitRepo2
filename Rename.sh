@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Path to metadata file
-METADATA_FILE="Full_Spain_WL_List.txt"
+METADATA_FILE="/scratch/nf26742/Spain_WL/Full_Spain_WL_List.txt"
 
 # Path to directory with FASTQ files
 FASTQ_DIR="/scratch/nf26742/Spain_WL"
