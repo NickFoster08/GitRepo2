@@ -125,19 +125,6 @@ for srr in "${accessions[@]}"; do
     if [[ $? -eq 0 ]]; then
         echo "✅ Successfully downloaded and converted $srr"
     else
-        echo "⚠️  NCBI failed, trying ENA for $srr"
-
-        # Get first 6 characters to construct ENA FTP path
-        prefix=$(echo "$srr" | cut -c1-6)
-        url="https://ftp.sra.ebi.ac.uk/vol1/fastq/${prefix}/${srr}/${srr}_1.fastq.gz"
-
-        wget -P "$OUTDIR" "$url"
-        wget -P "$OUTDIR" "${url/_1/_2}"
-        
-        if [[ -f "$OUTDIR/${srr}_1.fastq.gz" ]]; then
-            echo "✅ Downloaded $srr from ENA"
-        else
-            echo "❌ Failed to download $srr from both NCBI and ENA"
-        fi
+        echo "⚠️  NCBI failed"
     fi
 done
