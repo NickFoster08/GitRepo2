@@ -20,8 +20,17 @@ mkdir -p "$OUTDIR"
 # Path to the metadata TSV file
 METADATA="/scratch/nf26742/Spain_WL/All_MetaData_WL_Spain_FINAL.tsv"
 
+if [[ ! -f "$METADATA" ]]; then
+    echo "❌ Metadata file not found: $METADATA"
+    exit 1
+fi
+
+
 # Read header and get column numbers
 header=$(head -1 "$METADATA")
+echo "🔍 METADATA variable is: '$METADATA'"
+echo "📂 Listing file:"
+ls -lh "$METADATA"
 
 geo_col=$(echo "$header" | tr '\t' '\n' | grep -n -i 'geo_loc_name_country' | cut -d: -f1)
 host_col=$(echo "$header" | tr '\t' '\n' | grep -n -i 'HOST' | cut -d: -f1)
