@@ -1,10 +1,10 @@
 #!/bin/bash
 #SBATCH --job-name=Spain_WL_Rename      # Job name
 #SBATCH --partition=batch                # Partition (queue) name
-#SBATCH --ntasks=1                       # Run on a single CPU
-#SBATCH --cpus-per-task=8                # Number of cores per task
-#SBATCH --mem=80gb                       # Job memory request
-#SBATCH --time=00-12:00:00               # Time limit hrs:min:sec
+#SBATCH --ntasks=1                      # Run on a single CPU
+#SBATCH --cpus-per-task=8               # Number of cores per task
+#SBATCH --mem=80gb                      # Job memory request
+#SBATCH --time=00-12:00:00              # Time limit hrs:min:sec
 #SBATCH --output=/scratch/nf26742/scratch/log.%j.out  # Standard output log
 #SBATCH --error=/scratch/nf26742/scratch/log.%j.err   # Standard error log
 
@@ -16,9 +16,6 @@ OUTDIR="/scratch/nf26742/Spain_WL"
 
 # Create output directory if it doesn't exist
 mkdir -p "$OUTDIR"
-
-# Define the directory where your FASTQ files are located
-OUTDIR="/scratch/nf26742/Spain_WLv"
 
 # Path to the metadata TSV file
 METADATA="/scratch/nf26742/Spain_WL/All_MetaData_WL_Spain_FINAL.tsv"
@@ -36,14 +33,17 @@ if [[ -z $geo_col || -z $host_col || -z $date_col || -z $run_col ]]; then
     exit 1
 fi
 
-# Process each line, skipping the header
-tail -n +2 "$METADATA" | while IFS=$'\t' read -r line; do
-    geo_loc=$(echo "$line" | awk -F'\t' -v col=$geo_col '{print $col}')
-    host=$(echo "$line" | awk -F'\t' -v col=$host_col '{print $col}')
-    date=$(echo "$line" | awk -F'\t' -v col=$date_col '{print $col}')
-    runid=$(echo "$line" | awk -F'\t' -v col=$run_col '{print $col}')
-
-    # Clean for filenames
+# Process each line, skipping the header, reading fields into an array to avoid subshell issues
+while IFS=$'\t' read -r -a fields; do
+    geo_loc="${fields[$((geo_col-1))]}"
+    host="${fields[$((host_col-1))]}"
+    date="${fields[$((date_col-1))]}"
+    runid="${fields[$((run_col-1))]}"
+    
+    # Trim whitespace from runid if any
+    runid=$(echo "$runid" | xargs)
+    
+    # Clean strings for filenames
     safe_geo=$(echo "$geo_loc" | sed 's/ /_/g' | sed 's/[^a-zA-Z0-9_-]//g')
     safe_host=$(echo "$host" | sed 's/ /_/g' | sed 's/[^a-zA-Z0-9_-]//g')
     safe_date=$(echo "$date" | sed 's#[/: ]#_#g' | sed 's/[^a-zA-Z0-9_-]//g')
@@ -55,6 +55,8 @@ tail -n +2 "$METADATA" | while IFS=$'\t' read -r line; do
     new_r1="${OUTDIR}/${newbase}_1.fastq"
     new_r2="${OUTDIR}/${newbase}_2.fastq"
 
+    echo "Looking for files: $r1 and $r2"
+
     if [[ -f "$r1" && -f "$r2" ]]; then
         mv "$r1" "$new_r1"
         mv "$r2" "$new_r2"
@@ -62,4 +64,4 @@ tail -n +2 "$METADATA" | while IFS=$'\t' read -r line; do
     else
         echo "⚠️  One or both FASTQ files missing for $runid"
     fi
-done
+done < <(tail -n +2 "$METADATA")
