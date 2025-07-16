@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=Spain_WL_Rename         # Job name
+#SBATCH --job-name=Portugal_WL_Rename         # Job name
 #SBATCH --partition=batch                  # Partition (queue) name
 #SBATCH --ntasks=1                         # Run on a single CPU
 #SBATCH --cpus-per-task=8                  # Number of cores per task
@@ -11,13 +11,13 @@
 #SBATCH --mail-user=nf26742@uga.edu        # Where to send mail
 
 # Specify output directory
-OUTDIR="/scratch/nf26742/Spain_WL"
+OUTDIR="/scratch/nf26742/Wildlife_Bovis/Portugal_WL"
 
 # Create output directory if it doesn't exist
 mkdir -p "$OUTDIR"
 
 # Path to the metadata TSV file
-METADATA="/scratch/nf26742/Spain_WL/All_MetaData_WL_Spain_FINAL.tsv"
+METADATA="/scratch/nf26742/Wildlife_Bovis/Portugal_WL/All_MetaData_WL_Ptgal_FINAL.tsv"
 
 # Ensure metadata file exists
 if [[ ! -f "$METADATA" ]]; then
