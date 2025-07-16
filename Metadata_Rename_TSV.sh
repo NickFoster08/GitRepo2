@@ -38,7 +38,7 @@ ls -lh "$METADATA"
 geo_col=$(echo "$header" | tr '\t' '\n' | grep -n -i 'geo_loc_name_country' | cut -d: -f1)
 host_col=$(echo "$header" | tr '\t' '\n' | grep -n -i 'HOST' | cut -d: -f1)
 date_col=$(echo "$header" | tr '\t' '\n' | grep -n -i 'Collection_Date' | cut -d: -f1)
-run_col=$(echo "$header" | tr '\t' '\n' | grep -n -i '^Run$' | cut -d: -f1)
+run_col=$(echo "$header" | tr '\t' '\n' | grep -n -i 'Run' | cut -d: -f1)
 
 if [[ -z $geo_col || -z $host_col || -z $date_col || -z $run_col ]]; then
     echo "❌ Error: Could not find one or more required columns in the metadata header."
