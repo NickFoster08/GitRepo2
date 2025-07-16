@@ -19,6 +19,17 @@ mkdir -p "$OUTDIR"
 # Path to the metadata TSV file
 METADATA="/scratch/nf26742/Wildlife_Bovis/Portugal_WL/All_MetaData_WL_Ptgal_FINAL.tsv"
 
+echo "Running script: $0"
+echo "Current working directory: $(pwd)"
+echo "Listing current dir:"
+ls -lh
+echo "Checking METADATA file path: $METADATA"
+if [[ -f "$METADATA" ]]; then
+    echo "Metadata file exists and is accessible."
+else
+    echo "Metadata file DOES NOT exist or is NOT accessible."
+fi
+
 # Ensure metadata file exists
 if [[ ! -f "$METADATA" ]]; then
     echo "❌ Metadata file not found: $METADATA"
