@@ -46,6 +46,9 @@ echo "🔍 METADATA variable is: '$METADATA'"
 echo "📂 Listing file:"
 ls -lh "$METADATA"
 
+echo "Columns found:"
+echo "$header" | tr '\t' '\n' | nl
+
 geo_col=$(echo "$header" | tr '\t' '\n' | grep -n -i '^geo_loc_name$' | cut -d: -f1)
 host_col=$(echo "$header" | tr '\t' '\n' | grep -n -i '^HOST$' | cut -d: -f1)
 date_col=$(echo "$header" | tr '\t' '\n' | grep -n -i '^Collection_Date$' | cut -d: -f1)
