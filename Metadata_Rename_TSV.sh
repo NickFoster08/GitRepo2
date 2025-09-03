@@ -11,13 +11,13 @@
 #SBATCH --mail-user=nf26742@uga.edu        # Where to send mail
 
 # Specify output directory
-OUTDIR="/scratch/nf26742/Wildlife_Bovis/Ethiopia_Cattle"
+OUTDIR="/scratch/nf26742/Wildlife_Bovis/Italy_WL"
 
 # Create output directory if it doesn't exist
 mkdir -p "$OUTDIR"
 
 # Path to the metadata TSV file
-METADATA="/scratch/nf26742/Wildlife_Bovis/Ethiopia_Cattle/All_MetaData_Cattle_Ethiopia_FINAL.tsv"
+METADATA="/scratch/nf26742/Wildlife_Bovis/Italy_WL/All_MetaData_WL_Italy_FINAL.tsv"
 
 echo "Running script: $0"
 echo "Current working directory: $(pwd)"
