@@ -17,7 +17,7 @@ OUTDIR="/scratch/nf26742/Wildlife_Bovis/Italy_Cattle"
 mkdir -p "$OUTDIR"
 
 # Path to the metadata TSV file
-METADATA="/scratch/nf26742/Wildlife_Bovis/Italy_WL/All_MetaData_Cattle_Italy_FINAL.tsv"
+METADATA="/scratch/nf26742/Wildlife_Bovis/Italy_Cattle/All_MetaData_Cattle_Italy_FINAL.tsv"
 
 echo "Running script: $0"
 echo "Current working directory: $(pwd)"
