@@ -19,7 +19,7 @@ OUTDIR="/scratch/nf26742/rerun_2025/job_${SLURM_JOB_ID}"
 mkdir -p "$OUTDIR"
 
 # Load modules
-module load Bactopia/3.1.0
+module load Bactopia/3.2.0
 
 # Move to working directory
 cd "$OUTDIR"
