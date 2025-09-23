@@ -10,7 +10,7 @@
 #SBATCH --mail-type=END,FAIL               # Mail events (NONE, BEGIN, END, FAIL, ALL)
 #SBATCH --mail-user=nf26742@uga.edu        # Where to send mail
 
-module load pigz
+module load  pigz/2.8-GCCcore-13.3.0
 
 cd /scratch/nf26742/Cattle_Wildlife_All
 
