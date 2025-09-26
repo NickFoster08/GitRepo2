@@ -21,7 +21,7 @@ then
 fi
 
 #Load Bactopia
-module load Bactopia/3.1.0
+module load Bactopia/3.2.0
 
 #move to workdir
 cd /scratch/nf26742/rerun_2025/job_40647442
