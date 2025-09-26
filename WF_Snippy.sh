@@ -16,7 +16,7 @@ set -e
 
 REFERENCE=/home/nf26742/vsnp3_test_dataset/vsnp_dependencies/Mycobacterium_AF2122
 
-OUTDIR=/scratch/nf26742/rerun_2025/job_37864473
+OUTDIR=/scratch/nf26742/rerun_2025/job_40647442
 
 #Tells the program to make the ourdir folder if it cant find it
 if [ ! -d $OUTDIR ] 
@@ -25,7 +25,7 @@ then
 fi
 
 #Load modules
-module load Bactopia/3.1.0
+module load Bactopia/3.2.0
 
 #move to workdir
 cd $OUTDIR
