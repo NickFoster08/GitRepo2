@@ -24,7 +24,7 @@ fi
 module load Bactopia/3.1.0
 
 #move to workdir
-cd /scratch/nf26742/rerun_2025/job_
+cd /scratch/nf26742/rerun_2025/job_40647442
 
 #Create summary files from bactopia pipeline on samples
 bactopia summary \
