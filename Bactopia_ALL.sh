@@ -22,7 +22,7 @@ mkdir -p "$OUTDIR"
 module load Bactopia/3.2.0
 
 # Move to working directory
-cd "$OUTDIR"sq
+cd "$OUTDIR"
 
 # Prepare FOFN
 bactopia prepare \
