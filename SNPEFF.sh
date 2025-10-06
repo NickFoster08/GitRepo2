@@ -14,7 +14,7 @@
 # Exit immediately on error
 set -e
 
-OUTDIR=/scratch/nf26742/rerun_2025/job_40647442
+OUTDIR=/scratch/nf26742/rerun_2025/job_40758115
 
 # Make output directory if it doesn't exist
 if [ ! -d $OUTDIR ]; then
