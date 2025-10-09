@@ -24,7 +24,7 @@ cd $OUTDIR
 
 # Activate TB-Profiler Conda environment
 source /apps/eb/Bactopia/3.2.0-conda/etc/profile.d/conda.sh
-conda activate tbprofiler
+conda activate tb-profiler-env
 
 # Loop over all R1 FASTQs
 for R1 in ${FASTQDIR}/*_R1.fastq.gz; do
