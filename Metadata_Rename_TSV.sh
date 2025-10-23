@@ -11,13 +11,13 @@
 #SBATCH --mail-user=nf26742@uga.edu        # Where to send mail
 
 # Specify output directory
-OUTDIR="/scratch/nf26742/Wildlife_Bovis/Italy_Cattle"
+OUTDIR="/scratch/nf26742/MI_Bovis"
 
 # Create output directory if it doesn't exist
 mkdir -p "$OUTDIR"
 
 # Path to the metadata TSV file
-METADATA="/scratch/nf26742/Wildlife_Bovis/Italy_Cattle/All_MetaData_Cattle_Italy_FINAL.tsv"
+METADATA="/scratch/nf26742/MI_Bovis"
 
 echo "Running script: $0"
 echo "Current working directory: $(pwd)"
@@ -50,7 +50,6 @@ echo "Columns found:"
 echo "$header" | tr '\t' '\n' | nl
 
 # Flexible header matching
-geo_col=$(echo "$header" | tr '\t' '\n' | grep -n -i -E '^geo_loc_name(_country)?$' | cut -d: -f1)
 host_col=$(echo "$header" | tr '\t' '\n' | grep -n -i '^host$' | cut -d: -f1)
 date_col=$(echo "$header" | tr '\t' '\n' | grep -n -i '^collection_date$' | cut -d: -f1)
 run_col=$(echo "$header" | tr '\t' '\n' | grep -n -i '^run$' | cut -d: -f1)
@@ -63,7 +62,6 @@ fi
 
 # Process each line (skip header)
 tail -n +2 "$METADATA" | while IFS=$'\t' read -r -a fields; do
-    geo_loc="${fields[$((geo_col-1))]}"
     host="${fields[$((host_col-1))]}"
     date="${fields[$((date_col-1))]}"
     runid="${fields[$((run_col-1))]}"
@@ -72,12 +70,11 @@ tail -n +2 "$METADATA" | while IFS=$'\t' read -r -a fields; do
     runid=$(echo "$runid" | xargs)
 
     # Clean strings for filenames
-    safe_geo=$(echo "$geo_loc" | sed 's/ /_/g' | sed 's/[^a-zA-Z0-9_-]//g')
     safe_host=$(echo "$host" | sed 's/ /_/g' | sed 's/[^a-zA-Z0-9_-]//g')
     safe_date=$(echo "$date" | sed 's#[/: ]#_#g' | sed 's/[^a-zA-Z0-9_-]//g')
 
     # Compose new file names
-    newbase="${safe_geo}_${safe_host}_${safe_date}-${runid}"
+    newbase="${safe_host}_${safe_date}-${runid}"
     r1="${OUTDIR}/${runid}_1.fastq"
     r2="${OUTDIR}/${runid}_2.fastq"
     new_r1="${OUTDIR}/${newbase}_1.fastq"
