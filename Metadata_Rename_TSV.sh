@@ -17,7 +17,7 @@ OUTDIR="/scratch/nf26742/MI_Bovis"
 mkdir -p "$OUTDIR"
 
 # Path to the metadata TSV file
-METADATA="MI_BTB_Metadata_Cleaned.tsv"
+METADATA="/scratch/nf26742/MI_Bovis/MI_BTB_Metadata_Cleaned.tsv"
 
 echo "Running script: $0"
 echo "Current working directory: $(pwd)"
