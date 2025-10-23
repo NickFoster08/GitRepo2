@@ -1,14 +1,14 @@
 #!/bin/bash
 #SBATCH --job-name=MI_Bovis_Rename        # Job name
-#SBATCH --partition=batch                  # Partition (queue) name
-#SBATCH --ntasks=1                         # Run on a single CPU
-#SBATCH --cpus-per-task=8                  # Number of cores per task
-#SBATCH --mem=80gb                         # Job memory request
-#SBATCH --time=00-12:00:00                 # Time limit hrs:min:sec
+#SBATCH --partition=batch                 # Partition (queue) name
+#SBATCH --ntasks=1                        # Run on a single CPU
+#SBATCH --cpus-per-task=8                 # Number of cores per task
+#SBATCH --mem=80gb                        # Job memory request
+#SBATCH --time=00-12:00:00                # Time limit hrs:min:sec
 #SBATCH --output=/scratch/nf26742/scratch/log.%j.out  # Standard output log
 #SBATCH --error=/scratch/nf26742/scratch/log.%j.err   # Standard error log
-#SBATCH --mail-type=END,FAIL               # Mail events (NONE, BEGIN, END, FAIL, ALL)
-#SBATCH --mail-user=nf26742@uga.edu        # Where to send mail
+#SBATCH --mail-type=END,FAIL              # Mail events
+#SBATCH --mail-user=nf26742@uga.edu       # Where to send mail
 
 # Specify output directory
 OUTDIR="/scratch/nf26742/MI_Bovis"
@@ -49,7 +49,8 @@ ls -lh "$METADATA"
 echo "Columns found:"
 echo "$header" | tr '\t' '\n' | nl
 
-# Flexible header matching
+# ✅ Define all columns BEFORE the check
+geo_col=$(echo "$header" | tr '\t' '\n' | grep -n -i '^geographic_location$' | cut -d: -f1)
 host_col=$(echo "$header" | tr '\t' '\n' | grep -n -i '^host$' | cut -d: -f1)
 date_col=$(echo "$header" | tr '\t' '\n' | grep -n -i '^collection_date$' | cut -d: -f1)
 run_col=$(echo "$header" | tr '\t' '\n' | grep -n -i '^run$' | cut -d: -f1)
