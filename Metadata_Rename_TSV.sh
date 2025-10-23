@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=Italy_Cattle_Rename         # Job name
+#SBATCH --job-name=MI_Bovis_Rename        # Job name
 #SBATCH --partition=batch                  # Partition (queue) name
 #SBATCH --ntasks=1                         # Run on a single CPU
 #SBATCH --cpus-per-task=8                  # Number of cores per task
@@ -17,7 +17,7 @@ OUTDIR="/scratch/nf26742/MI_Bovis"
 mkdir -p "$OUTDIR"
 
 # Path to the metadata TSV file
-METADATA="/scratch/nf26742/MI_Bovis"
+METADATA="MI_BTB_Metadata_Cleaned.tsv"
 
 echo "Running script: $0"
 echo "Current working directory: $(pwd)"
