@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=USA_Human_bovis      # Job name
+#SBATCH --job-name=MI_Bov      # Job name
 #SBATCH --partition=batch                # Partition (queue) name
 #SBATCH --ntasks=1                       # Run on a single CPU
 #SBATCH --cpus-per-task=8                # Number of cores per task
