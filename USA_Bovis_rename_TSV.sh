@@ -27,11 +27,11 @@ echo "Columns found:"
 echo "$header" | tr '\t' '\n' | nl
 
 # Identify columns
-host_col=$(echo "$header" | tr '\t' '\n' | grep -ni '^host$' | cut -d: -f1)
-site_col=$(echo "$header" | tr '\t' '\n' | grep -ni '^site_tb_disease$' | cut -d: -f1)
+host_col=$(echo "$header" | tr '\t' '\n' | grep -ni '^HOST$' | cut -d: -f1)
+site_col=$(echo "$header" | tr '\t' '\n' | grep -ni '^Site_TB_Disease$' | cut -d: -f1)
 geo_col=$(echo "$header" | tr '\t' '\n' | grep -ni '^geo_loc_name_country$' | cut -d: -f1)
-year_col=$(echo "$header" | tr '\t' '\n' | grep -ni '^case_count_year$' | cut -d: -f1)
-run_col=$(echo "$header" | tr '\t' '\n' | grep -ni '^run$' | cut -d: -f1)
+year_col=$(echo "$header" | tr '\t' '\n' | grep -ni '^Collection_Date$' | cut -d: -f1)
+run_col=$(echo "$header" | tr '\t' '\n' | grep -ni '^Run$' | cut -d: -f1)
 
 if [[ -z $host_col || -z $site_col || -z $geo_col || -z $year_col || -z $run_col ]]; then
     echo "❌ Missing required columns!"
