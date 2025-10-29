@@ -12,7 +12,7 @@
 
 module load  pigz/2.8-GCCcore-13.3.0
 
-cd /scratch/nf26742/Cattle_Wildlife_All
+cd /scratch/nf26742/MI_Bovis_Any
 
 # Gzip only uncompressed .fastq files
 for f in *.fastq; do
