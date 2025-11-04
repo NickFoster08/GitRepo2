@@ -34,5 +34,4 @@ cd $OUTDIR
 bactopia \
     --wf snippy \
     --reference $REFERENCE/NC_002945v4.gbk \
-    --exclude $OUTDIR/bactopia-exclude.tsv \
     --bactopia $OUTDIR
