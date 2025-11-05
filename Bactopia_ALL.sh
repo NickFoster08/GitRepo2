@@ -1,10 +1,10 @@
 #!/bin/bash
-#SBATCH --job-name=Bactopia_MI_Bovis        # Job name
+#SBATCH --job-name=Bactopia_USA_Human_Bovis        # Job name
 #SBATCH --partition=batch             # Partition (queue) name
 #SBATCH --ntasks=1                    # Run on a single CPU
 #SBATCH --cpus-per-task=4             #number of cores per task
 #SBATCH --mem=40GB                     # Job memory request
-#SBATCH --time=04-00:00:00               # Time limit hrs:min:sec
+#SBATCH --time=08-00:00:00               # Time limit hrs:min:sec
 #SBATCH --output=/scratch/nf26742/scratch/log.%j.out    # Standard output log
 #SBATCH --error=/scratch/nf26742/scratch/log.%j.err     # Standard error log
 
@@ -26,7 +26,7 @@ cd "$OUTDIR"
 
 # Prepare FOFN
 bactopia prepare \
-  --path /scratch/nf26742/MI_Bovis_Any \
+  --path /scratch/nf26742/USA_Bovis_Human\
   --species "Mycobacterium bovis" \
   --genome-size 4400000 \
   > $OUTDIR/samples.txt
