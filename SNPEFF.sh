@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=SNPEFF      # Job name
+#SBATCH --job-name=SNPEFF_MI     # Job name
 #SBATCH --partition=batch             # Partition (queue) name
 #SBATCH --ntasks=1                    # Run on a single CPU
 #SBATCH --cpus-per-task=4             # number of cores per task
@@ -29,7 +29,7 @@ module load Java/21.0.5
 cd $OUTDIR
 
 # ---- INPUTS ----
-VCF_INPUT=""
+VCF_INPUT="/scratch/nf26742/rerun_2025/job_41185151/bactopia-runs/snippy-20251107-132206/snippy-core/core-snp.vcf"
 GENOME_NAME="AF2122"
 
 # ---- OUTPUTS ----
