@@ -14,7 +14,7 @@
 # Exit immediately on error
 set -e
 
-OUTDIR=/scratch/nf26742/rerun_2025/job_41138789
+OUTDIR=/scratch/nf26742/rerun_2025/job_41185151
 
 # Make output directory if it doesn't exist
 if [ ! -d $OUTDIR ]; then
@@ -29,7 +29,7 @@ module load Java/21.0.5
 cd $OUTDIR
 
 # ---- INPUTS ----
-VCF_INPUT="/scratch/nf26742/rerun_2025/job_40647442/bactopia-runs/snippy-20250926-130656/gubbins/core-snp.summary_of_snp_distribution.vcf"
+VCF_INPUT=""
 GENOME_NAME="AF2122"
 
 # ---- OUTPUTS ----
