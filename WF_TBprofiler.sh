@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=Bactopia_Step3_TBProfiler      # Job name
+#SBATCH --job-name=_USABactopia_Step3_TBProfiler      # Job name
 #SBATCH --partition=batch             # Partition (queue) name
 #SBATCH --ntasks=1                    # Run on a single CPU
 #SBATCH --cpus-per-task=4             #number of cores per task
@@ -14,7 +14,7 @@
 #Exit on error immediatley 
 set -e
 
-OUTDIR=/scratch/nf26742/rerun_2025/job_40758115
+OUTDIR=/scratch/nf26742/rerun_2025/job_41187889
 
 #Tells the program to make the ourdir folder if it cant find it
 if [ ! -d $OUTDIR ] 
