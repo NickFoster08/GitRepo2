@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=USA_SNPEFF    # Job name
+#SBATCH --job-name=SNPEFF_USA_BOVIS   # Job name
 #SBATCH --partition=batch             # Partition (queue) name
 #SBATCH --ntasks=1                    # Run on a single CPU
 #SBATCH --cpus-per-task=4             # number of cores per task

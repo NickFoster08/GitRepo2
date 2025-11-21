@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=_USABactopia_Step3_TBProfiler      # Job name
+#SBATCH --job-name=TBProfiler_USA_Bovis     # Job name
 #SBATCH --partition=batch             # Partition (queue) name
 #SBATCH --ntasks=1                    # Run on a single CPU
 #SBATCH --cpus-per-task=4             #number of cores per task

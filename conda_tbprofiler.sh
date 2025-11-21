@@ -1,10 +1,10 @@
 #!/bin/bash
-#SBATCH --job-name=TB_Profiler_Conda      # Job name
+#SBATCH --job-name=TB_Profiler_Conda_USA_BOVIS     # Job name
 #SBATCH --partition=batch             # Partition (queue) name
 #SBATCH --ntasks=1                    # Run on a single CPU
 #SBATCH --cpus-per-task=4             #number of cores per task
 #SBATCH --mem=40GB                     # Job memory request
-#SBATCH --time=04-00:00:00               # Time limit hrs:min:sec
+#SBATCH --time=07-00:00:00               # Time limit hrs:min:sec
 #SBATCH --output=/scratch/nf26742/scratch/log.%j.out    # Standard output log
 #SBATCH --error=/scratch/nf26742/scratch/log.%j.err     # Standard error log
 
@@ -22,8 +22,8 @@ source /apps/eb/Bactopia/3.2.0-conda/etc/profile.d/conda.sh
 conda activate tb-profiler-env
 
 # Directories
-FASTQDIR=/scratch/nf26742/Cattle_Wildlife_All
-OUTDIR=/scratch/nf26742/Cattle_Wildlife_All/TBProfiler_results
+FASTQDIR=/scratch/nf26742/USA_Bovis_Human
+OUTDIR=/scratch/nf26742/USA_Bovis_Human/TBProfiler_results
 mkdir -p "$OUTDIR"
 
 # Log file for skipped samples
