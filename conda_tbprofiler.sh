@@ -30,10 +30,15 @@ mkdir -p "$OUTDIR"
 SKIP_LOG="${OUTDIR}/skipped_samples.log"
 echo "Skipped samples log - $(date)" > "$SKIP_LOG"
 
-# Loop over all R1 FASTQs
-for R1 in "${FASTQDIR}"/*_R1.fastq.gz; do
-    SAMPLE=$(basename "$R1" _R1.fastq.gz)
-    R2="${FASTQDIR}/${SAMPLE}_R2.fastq.gz"
+# Loop over all _1.fastq.gz files
+for R1 in "${FASTQDIR}"/*_1.fastq.gz; do
+    # Dynamically determine R2 by replacing _1 with _2
+    R2="${R1/_1.fastq.gz/_2.fastq.gz}"
+    
+    # Extract a sample name for output dir (everything before _1.fastq.gz)
+    SAMPLE="${R1##*/}"        # strip path
+    SAMPLE="${SAMPLE%_1.fastq.gz}"
+
     SAMPLE_OUTDIR="${OUTDIR}/${SAMPLE}"
 
     # Check if R2 exists
@@ -42,16 +47,14 @@ for R1 in "${FASTQDIR}"/*_R1.fastq.gz; do
         continue
     fi
 
-    # Check if output already exists
+    # Skip if output already exists
     if [ -d "$SAMPLE_OUTDIR" ]; then
         echo "$SAMPLE: output already exists" | tee -a "$SKIP_LOG"
         continue
     fi
 
-    # Create output directory
     mkdir -p "$SAMPLE_OUTDIR"
     
-    # Run TB-Profiler inside sample output directory
     cd "$SAMPLE_OUTDIR"
     tb-profiler profile \
         -1 "$R1" \
@@ -59,6 +62,5 @@ for R1 in "${FASTQDIR}"/*_R1.fastq.gz; do
         -p "$SAMPLE" \
         --threads 4
 
-    # Return to main OUTDIR
     cd "$OUTDIR"
 done
