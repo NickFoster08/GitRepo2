@@ -31,4 +31,4 @@ fi
 module load IQ-TREE/3.0.1-gompi-2024a
 
 # Run IQ-TREE
-iqtree3 -s core-snp.no_ref.fasta -m GTR+ASC -bb 1000 -nt AUTO
+iqtree3 -s ore-snp.no_ref.fasta.varsites.phy -m GTR+ASC -bb 1000 -nt AUTO
