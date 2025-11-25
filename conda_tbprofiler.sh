@@ -64,3 +64,6 @@ for R1 in "${FASTQDIR}"/*_1.fastq.gz; do
 
     cd "$OUTDIR"
 done
+
+#Collate
+tb-profiler collate -d "$OUTDIR" -o "${OUTDIR}/collated_results.csv"
