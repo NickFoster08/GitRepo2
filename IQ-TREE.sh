@@ -13,22 +13,22 @@
 
 set -e
 
-OUTDIR=/scratch/nf26742/rerun_2025/job_41187889/bactopia-runs/snippy-20251121-145859
+OUTDIR=/scratch/nf26742/rerun_2025/job_41187889/bactopia-runs/snippy-20251121-145859/iqtree_noRef
 
 # Make sure the output directory exists
 mkdir -p $OUTDIR
 
-# Move to the working directory
-cd $OUTDIR
+# Move to the folder containing the alignment
+cd /scratch/nf26742/rerun_2025/job_41187889/bactopia-runs/snippy-20251121-145859/
 
 # Check that the cleaned alignment exists
 if [ ! -f core-snp.no_ref.fasta ]; then
-    echo "Error: core-snp.no_ref.fasta not found in $OUTDIR"
+    echo "Error: core-snp.no_ref.fasta not found in this folder"
     exit 1
 fi
 
 # Load IQ-TREE module
 module load IQ-TREE/3.0.1-gompi-2024a
 
-# Run IQ-TREE
-iqtree3 -s core-snp.no_ref.fasta.varsites.phy -m GTR+ASC -bb 1000 -nt AUTO
+# Run IQ-TREE with outputs going into the clean folder
+iqtree3 -s core-snp.no_ref.fasta -st BINARY -m MK+F -bb 1000 -nt AUTO -pre $OUTDIR/iqtree_run
