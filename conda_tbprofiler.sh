@@ -23,7 +23,7 @@ conda activate tb-profiler-env
 
 # Directories
 FASTQDIR=/scratch/nf26742/USA_Bovis_Human
-OUTDIR=/scratch/nf26742/USA_Bovis_Human/TBProfiler_results
+OUTDIR=/scratch/nf26742/USA_Bovis_Human/TBProfiler_results_2
 mkdir -p "$OUTDIR"
 
 # Log file for skipped samples
@@ -66,4 +66,4 @@ for R1 in "${FASTQDIR}"/*_1.fastq.gz; do
 done
 
 #Collate
-tb-profiler collate -d "$OUTDIR" -o "${OUTDIR}/collated_results.csv"
+tb-profiler collate --data-dir "$OUTDIR"
