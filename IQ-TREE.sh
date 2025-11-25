@@ -31,4 +31,4 @@ fi
 module load IQ-TREE/3.0.1-gompi-2024a
 
 # Run IQ-TREE with outputs going into the clean folder
-iqtree3 -s core-snp.no_ref.fasta -st BINARY -m MK+F -bb 1000 -nt AUTO -pre $OUTDIR/iqtree_run
+iqtree3 -s core-snp.no_ref.fasta -m GTR+ASC -bb 1000 -nt AUTO -pre $OUTDIR/iqtree_run
