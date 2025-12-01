@@ -31,9 +31,6 @@ for fq1 in *_1.fastq.gz; do
     
     echo "Processing $prefix ..."
     
-    tb-profiler profile -1 "$fq1" -2 "$fq2" -o "$OUTDIR" -t 4 -p "$prefix"
+    tb-profiler profile -1 "$fq1" -2 "$fq2" -t 4 -p "$prefix"
 done
 
-# Collate results at the end
-cd $OUTDIR
-tb-profiler collate
