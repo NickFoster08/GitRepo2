@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=TB_Profiler_USA_BOVIS
+#SBATCH --job-name=Force_tbprofiler_USA_Bovis
 #SBATCH --partition=batch
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=4
@@ -13,20 +13,22 @@
 module load TB-Profiler/6.6.5
 
 FASTQDIR=/scratch/nf26742/USA_Bovis_Human
-OUTDIR=/scratch/nf26742/USA_Bovis_Human/TBProfiler_results
+OUTBASE=/scratch/nf26742/USA_Bovis_Human
 
-mkdir -p "$OUTDIR"
-cd "$FASTQDIR" || exit 1
+cd "$OUTBASE" || exit 1
 
-for fq1 in *_1.fastq.gz; do
+mkdir -p TBProfiler_results
+cd TBProfiler_results || exit 1
+
+for fq1 in "$FASTQDIR"/*_1.fastq.gz; do
     fq2="${fq1/_1.fastq.gz/_2.fastq.gz}"
 
     if [[ ! -f "$fq2" ]]; then
-        echo "Skipping $fq1 (missing pair)" >&2
+        echo "Skipping $(basename "$fq1") (missing pair)" >&2
         continue
     fi
 
-    prefix="${fq1%%_1.fastq.gz}"
+    prefix=$(basename "${fq1%%_1.fastq.gz}")
 
     echo "Processing $prefix"
 
@@ -34,11 +36,10 @@ for fq1 in *_1.fastq.gz; do
         -1 "$fq1" \
         -2 "$fq2" \
         -t 4 \
-        -p "$prefix" \
-        --outdir "$OUTDIR"
+        -p "$prefix"
 done
 
-cd "$FASTQDIR" || exit 1
+cd "$OUTBASE" || exit 1
 
 tb-profiler collate \
   --dir TBProfiler_results \
