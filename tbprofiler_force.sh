@@ -10,27 +10,36 @@
 #SBATCH --mail-type=END,FAIL
 #SBATCH --mail-user=nf26742@uga.edu
 
-# Load module
 module load TB-Profiler/6.6.5
 
-# Directory containing FASTQs
 FASTQDIR=/scratch/nf26742/USA_Bovis_Human
-OUTDIR=/scratch/nf26742/USA_Bovis_Human/results_3
+OUTDIR=/scratch/nf26742/USA_Bovis_Human/TBProfiler_results
 
-mkdir -p $OUTDIR
+mkdir -p "$OUTDIR"
+cd "$FASTQDIR" || exit 1
 
-cd $FASTQDIR
-
-# Loop over all _1.fastq.gz files
 for fq1 in *_1.fastq.gz; do
-    # Infer _2 file
     fq2="${fq1/_1.fastq.gz/_2.fastq.gz}"
-    
-    # Generate a prefix based on the sample name
+
+    if [[ ! -f "$fq2" ]]; then
+        echo "Skipping $fq1 (missing pair)" >&2
+        continue
+    fi
+
     prefix="${fq1%%_1.fastq.gz}"
-    
-    echo "Processing $prefix ..."
-    
-    tb-profiler profile -1 "$fq1" -2 "$fq2" -t 4 -p "$prefix"
+
+    echo "Processing $prefix"
+
+    tb-profiler profile \
+        -1 "$fq1" \
+        -2 "$fq2" \
+        -t 4 \
+        -p "$prefix" \
+        --outdir "$OUTDIR"
 done
 
+cd "$FASTQDIR" || exit 1
+
+tb-profiler collate \
+  --dir TBProfiler_results \
+  --prefix USA_Bovis_Human
