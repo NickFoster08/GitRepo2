@@ -23,13 +23,14 @@ then
 fi
 
 #Load modules
-module load Bactopia/3.2.0
+module load Bactopia/3.2.0-conda
 
 #move to workdir
 cd $OUTDIR
 
 #Bactopia tools
 bactopia \
+    --profile singularity \
     --wf tbprofiler \
     --exclude $OUTDIR/bactopia-exclude.tsv \
     --bactopia $OUTDIR
