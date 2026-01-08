@@ -30,7 +30,6 @@ cd $OUTDIR
 
 #Bactopia tools
 bactopia \
-    --profile singularity \
     --wf tbprofiler \
     --exclude $OUTDIR/bactopia-exclude.tsv \
     --bactopia $OUTDIR
