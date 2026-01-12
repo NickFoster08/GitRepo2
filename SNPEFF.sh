@@ -34,7 +34,7 @@ mkdir -p "$OUTDIR"
 # Load modules
 # -----------------------------
 module purge
-module load snpEff/5.2f-GCCcore-11.3.0-Java-11
+module load snpEff/5.2c-GCCcore-12.3.0-Java-11
 module load Java/11.0.20
 
 # -----------------------------
