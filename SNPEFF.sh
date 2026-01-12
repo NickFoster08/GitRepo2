@@ -73,8 +73,8 @@ cut -f1 "$VCF_FIXED" | sort | uniq
 # -----------------------------
 # Step 3: Run snpEff annotation
 # -----------------------------
-# Using the cluster module executable; multithreading with -t
-snpEff -t -c /home/nf26742/SNPEFF_DataBase/snpEff/snpEff.config \
+# Using the cluster module executable
+snpEff -c /home/nf26742/SNPEFF_DataBase/snpEff/snpEff.config \
        -v -stats "$STATS_HTML" \
        "$GENOME_NAME" "$VCF_FIXED" > "$ANNOTATED_VCF"
 
