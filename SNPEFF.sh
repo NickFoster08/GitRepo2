@@ -10,7 +10,9 @@
 #SBATCH --mail-type=END,FAIL
 #SBATCH --mail-user=nf26742@uga.edu
 
-# Exit on error, undefined variables, or failed pipes
+# -----------------------------
+# Safety
+# -----------------------------
 set -euo pipefail
 
 # -----------------------------
@@ -29,23 +31,24 @@ STATS_HTML="$OUTDIR/snpeff_summary.html"
 # Prepare output directory
 # -----------------------------
 mkdir -p "$OUTDIR"
+cd "$OUTDIR"
 
 # -----------------------------
-# Load modules
+# Load cluster modules
 # -----------------------------
 module purge
 module load snpEff/5.2c-GCCcore-12.3.0-Java-11
-module load Java/11.0.20
+
+# Optional: Check version
+snpEff -version
 
 # -----------------------------
 # Check input file
 # -----------------------------
 [ -f "$VCF_INPUT" ] || { echo "ERROR: Input VCF not found: $VCF_INPUT"; exit 1; }
 
-cd "$OUTDIR"
-
 # -----------------------------
-# Step 1: Keep only simple SNPs
+# Step 1: Keep only simple SNPs (no indels/complex alleles)
 # -----------------------------
 awk 'BEGIN {OFS="\t"} 
     /^#/ {print; next} 
@@ -53,26 +56,26 @@ awk 'BEGIN {OFS="\t"}
     "$VCF_INPUT" > "$CLEAN_VCF"
 
 # -----------------------------
-# Step 2: Fix chromosome names for snpEff
+# Step 2: Fix chromosome names to match snpEff database
 # -----------------------------
-# Replace header contig lines
+# Update header contig lines
 sed -i 's/^##contig=<ID=1,/##contig=<ID=NC_002945.4,/' "$CLEAN_VCF"
 
-# Force chromosome in all variant lines to match snpEff database
+# Force chromosome in all variant lines
 awk 'BEGIN{OFS="\t"} 
     /^#/ {print; next} 
     {$1="NC_002945.4"; print}' "$CLEAN_VCF" > "$VCF_FIXED"
 
-# Quick check (optional)
+# Quick check
 echo "Unique chromosomes in fixed VCF:"
 cut -f1 "$VCF_FIXED" | sort | uniq
 
 # -----------------------------
 # Step 3: Run snpEff annotation
 # -----------------------------
-java -Xmx16G -jar /home/nf26742/SNPEFF_DataBase/snpEff/snpEff.jar \
-    -c /home/nf26742/SNPEFF_DataBase/snpEff/snpEff.config \
-    -v -stats "$STATS_HTML" \
-    "$GENOME_NAME" "$VCF_FIXED" > "$ANNOTATED_VCF"
+# Using the cluster module executable; multithreading with -t
+snpEff -t -c /home/nf26742/SNPEFF_DataBase/snpEff/snpEff.config \
+       -v -stats "$STATS_HTML" \
+       "$GENOME_NAME" "$VCF_FIXED" > "$ANNOTATED_VCF"
 
 echo "snpEff annotation completed successfully!"
