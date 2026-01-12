@@ -29,7 +29,7 @@ module load Java/21.0.5
 cd $OUTDIR
 
 # ---- INPUTS ----
-VCF_INPUT=""
+VCF_INPUT="/scratch/nf26742/rerun_2025/job_41187889/bactopia-runs/snippy-20251201-150604/snippy-core/core-snp.vcf"
 GENOME_NAME="AF2122"
 
 # ---- OUTPUTS ----
