@@ -1,81 +1,55 @@
 #!/bin/bash
-#SBATCH --job-name=SNPEFF_USA_BOVIS
-#SBATCH --partition=batch
-#SBATCH --ntasks=1
-#SBATCH --cpus-per-task=4
-#SBATCH --mem=40GB
-#SBATCH --time=04-00:00:00
-#SBATCH --output=/scratch/nf26742/scratch/log.%j.out
-#SBATCH --error=/scratch/nf26742/scratch/log.%j.err
-#SBATCH --mail-type=END,FAIL
-#SBATCH --mail-user=nf26742@uga.edu
+#SBATCH --job-name=SNPEFF      # Job name
+#SBATCH --partition=batch             # Partition (queue) name
+#SBATCH --ntasks=1                    # Run on a single CPU
+#SBATCH --cpus-per-task=4             #number of cores per task
+#SBATCH --mem=40GB                     # Job memory request
+#SBATCH --time=04-00:00:00               # Time limit hrs:min:sec
+#SBATCH --output=/scratch/nf26742/scratch/log.%j.out    # Standard output log
+#SBATCH --error=/scratch/nf26742/scratch/log.%j.err     # Standard error log
 
-# -----------------------------
-# Safety
-# -----------------------------
-set -euo pipefail
+#SBATCH --mail-type=END,FAIL          # Mail events (NONE, BEGIN, END, FAIL, ALL)
+#SBATCH --mail-user=nf26742@uga.edu  # Where to send mail (change username@uga.edu to your email address)
 
-# -----------------------------
-# Paths
-# -----------------------------
-OUTDIR=/scratch/nf26742/rerun_2025/job_41187889
-VCF_INPUT="$OUTDIR/bactopia-runs/snippy-20251201-150604/snippy-core/core-snp.vcf"
+#Exit on error immediatley 
+set -e
+
+OUTDIR=/scratch/nf26742/rerun_2025/job_37864473
+
+#Tells the program to make the ourdir folder if it cant find it
+if [ ! -d $OUTDIR ] 
+then
+    mkdir -p $OUTDIR
+fi
+
+#Load modules
+module load snpEff/5.0e-GCCcore-11.3.0-Java-11
+module load Java/21.0.5
+
+#move to workdir
+cd $OUTDIR
+
+# ---- INPUTS ----
+VCF_INPUT="/scratch/nf26742/rerun_2025/job_37864473/bactopia-runs/snippy-20250612-134408/snippy-core/core-snp.vcf"
 GENOME_NAME="AF2122"
 
-CLEAN_VCF="$OUTDIR/core-snp.snpeff_ready.vcf"
-VCF_FIXED="$OUTDIR/core-snp.fixed3.vcf"
-ANNOTATED_VCF="$OUTDIR/core-snp.ann3.vcf"
+# ---- OUTPUTS ----
+ANNOTATED_VCF="$OUTDIR/core-snp.ann.vcf"
 STATS_HTML="$OUTDIR/snpeff_summary.html"
 
-# -----------------------------
-# Prepare output directory
-# -----------------------------
-mkdir -p "$OUTDIR"
-cd "$OUTDIR"
+# Fix chromosome names in VCF to match SnpEff database
+VCF_FIXED="$OUTDIR/core-snp.fixed.vcf"
 
-# -----------------------------
-# Load cluster modules
-# -----------------------------
-module purge
-module load snpEff/5.2c-GCCcore-12.3.0-Java-11
-
-# Optional: Check version
-snpEff -version
-
-# -----------------------------
-# Check input file
-# -----------------------------
-[ -f "$VCF_INPUT" ] || { echo "ERROR: Input VCF not found: $VCF_INPUT"; exit 1; }
-
-# -----------------------------
-# Step 1: Keep only simple SNPs (no indels/complex alleles)
-# -----------------------------
-awk 'BEGIN {OFS="\t"} 
-    /^#/ {print; next} 
-    length($4)==1 && length($5)==1 && $5 ~ /^[ACGT]$/ {print}' \
-    "$VCF_INPUT" > "$CLEAN_VCF"
-
-# -----------------------------
-# Step 2: Fix chromosome names to match snpEff database
-# -----------------------------
-# Update header contig lines
-sed -i 's/^##contig=<ID=1,/##contig=<ID=NC_002945.4,/' "$CLEAN_VCF"
-
-# Force chromosome in all variant lines
 awk 'BEGIN{OFS="\t"} 
     /^#/ {print; next} 
-    {$1="NC_002945.4"; print}' "$CLEAN_VCF" > "$VCF_FIXED"
+    {if($1 == "NC_002945") $1 = "NC_002945.4"; print}' \
+    $VCF_INPUT > $VCF_FIXED
 
-# Quick check
-echo "Unique chromosomes in fixed VCF:"
-cut -f1 "$VCF_FIXED" | sort | uniq
+# ---- RUN SNPEFF ----
+java -Xmx16g -jar /home/nf26742/SNPEFF_DataBase/snpEff/snpEff.jar \
+    -c /home/nf26742/SNPEFF_DataBase/snpEff/snpEff.config \
+    -v -stats $STATS_HTML \
+ $GENOME_NAME $VCF_FIXED > $ANNOTATED_VCF
 
-# -----------------------------
-# Step 3: Run snpEff annotation
-# -----------------------------
-# Using the cluster module executable
-snpEff -c /home/nf26742/SNPEFF_DataBase/snpEff/snpEff.config \
-       -v -stats "$STATS_HTML" \
-       "$GENOME_NAME" "$VCF_FIXED" > "$ANNOTATED_VCF"
 
-echo "snpEff annotation completed successfully!"
+
