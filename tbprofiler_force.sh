@@ -17,8 +17,8 @@ OUTBASE=/scratch/nf26742/USA_Bovis_Human
 
 cd "$OUTBASE" || exit 1
 
-mkdir -p TBProfiler_results
-cd TBProfiler_results || exit 1
+mkdir -p TBProfiler_results3
+cd TBProfiler_results3 || exit 1
 
 for fq1 in "$FASTQDIR"/*_1.fastq.gz; do
     fq2="${fq1/_1.fastq.gz/_2.fastq.gz}"
@@ -36,11 +36,12 @@ for fq1 in "$FASTQDIR"/*_1.fastq.gz; do
         -1 "$fq1" \
         -2 "$fq2" \
         -t 4 \
-        -p "$prefix"
+        -p "$prefix" \
+        --spoligotype
 done
 
 cd "$OUTBASE" || exit 1
 
 tb-profiler collate \
-  --dir TBProfiler_results \
+  --dir TBProfiler_results3 \
   --prefix USA_Bovis_Human
