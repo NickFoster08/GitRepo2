@@ -31,15 +31,16 @@ if (( ${#SAMPLE_DIRS[@]} == 0 )); then
     exit 1
 fi
 
-for SAMPLE_DIR in "${SAMPLE_DIRS[@]}"; do
-    if [[ ! -d "$SAMPLE_DIR" ]]; then
-        continue
-    fi
+for SAMPLE_DIR in "$BASE_OUTDIR"/*; do
+    [[ -d "$SAMPLE_DIR" ]] || continue
 
     echo "Running step2 on: $(basename "$SAMPLE_DIR")"
 
-    vsnp3_step2.py \
-        -i "$SAMPLE_DIR"
+    (
+        cd "$SAMPLE_DIR" || exit 1
+        vsnp3_step2.py
+    )
 done
+
 
 echo "vSNP step2 completed for all samples."
