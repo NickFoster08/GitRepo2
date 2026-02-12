@@ -50,7 +50,7 @@ echo "Columns found:"
 echo "$header" | tr '\t' '\n' | nl
 
 # ✅ Define all columns BEFORE the check
-geo_col=$(echo "$header" | tr '\t' '\n' | grep -n -i '^geographic_location$' | cut -d: -f1)
+country_col=$(echo "$header" | tr '\t' '\n' | grep -n -i '^country$' | cut -d: -f1)
 host_col=$(echo "$header" | tr '\t' '\n' | grep -n -i '^host$' | cut -d: -f1)
 date_col=$(echo "$header" | tr '\t' '\n' | grep -n -i '^collection_date$' | cut -d: -f1)
 run_col=$(echo "$header" | tr '\t' '\n' | grep -n -i '^run$' | cut -d: -f1)
