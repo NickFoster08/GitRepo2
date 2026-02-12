@@ -11,13 +11,17 @@
 #SBATCH --mail-type=END,FAIL             # Mail events (NONE, BEGIN, END, FAIL, ALL)
 #SBATCH --mail-user=nf26742@uga.edu      # Where to send mail
 
-# Output directory
-OUTDIR="/scratch/nf26742/Mex_USA_Animal_Bovis"
-mkdir -p "$OUTDIR"
+# Output directories
+OUTDIR="/scratch/nf26742/USA_Bovis_Human"
+TMPDIR="/scratch/nf26742/tmp"
+mkdir -p "$OUTDIR" "$TMPDIR"
 
 # Load required modules
 module load SRA-Toolkit/3.0.3-gompi-2022a
-module load EDirect/11.20.20220822  # For esearch/efetch
+module load EDirect/11.20.20220822
+
+# Set TMPDIR for SRA Toolkit
+export TMPDIR="$TMPDIR"
 
 # List of SAMN or SRX accessions
 ids=(SAMN03300815
@@ -1108,22 +1112,32 @@ SAMN03300812
 
 for id in "${ids[@]}"; do
     echo "🔍 Resolving SRRs for $id"
-    
-    # Get SRR accessions associated with the ID
+
+    # Get SRR accessions
     srrs=$(esearch -db sra -query "$id" | efetch -format runinfo | cut -d',' -f1 | tail -n +2)
-    
+
     if [ -z "$srrs" ]; then
-        echo "⚠️ No SRR found for $id"
+        echo "⚠️ No SRRs found for $id, skipping..."
         continue
     fi
 
     for srr in $srrs; do
-        echo "🔄 Downloading $srr"
-        fasterq-dump "$srr" -O "$OUTDIR" --threads 8
+        echo "📥 Prefetching $srr"
+        prefetch "$srr" -O "$OUTDIR"
+        if [[ $? -ne 0 ]]; then
+            echo "⚠️ Prefetch failed for $srr, skipping..."
+            continue
+        fi
+
+        # Full path to the downloaded .sra
+        SRA_FILE="$OUTDIR/$srr/$srr.sra"
+
+        echo "🔄 Converting $srr.sra to FASTQ"
+        fasterq-dump "$SRA_FILE" -O "$OUTDIR" --threads 8
         if [[ $? -eq 0 ]]; then
-            echo "✅ Successfully downloaded $srr"
+            echo "✅ Successfully downloaded and converted $srr"
         else
-            echo "⚠️ Failed to download $srr"
+            echo "⚠️ Failed to convert $srr"
         fi
     done
 done
