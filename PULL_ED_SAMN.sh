@@ -1,17 +1,18 @@
 #!/bin/bash
-#SBATCH --job-name=Mexico_USA_Animal_Bov
-#SBATCH --partition=batch
-#SBATCH --ntasks=1
-#SBATCH --cpus-per-task=8
-#SBATCH --mem=80gb
-#SBATCH --time=00-12:00:00
-#SBATCH --output=/scratch/nf26742/scratch/log.%j.out
-#SBATCH --error=/scratch/nf26742/scratch/log.%j.err
-#SBATCH --mail-type=END,FAIL
-#SBATCH --mail-user=nf26742@uga.edu
+#SBATCH --job-name=MEX_USA_Animal_Bov      # Job name
+#SBATCH --partition=batch                # Partition (queue) name
+#SBATCH --ntasks=1                       # Run on a single CPU
+#SBATCH --cpus-per-task=8                # Number of cores per task
+#SBATCH --mem=80gb                       # Job memory request
+#SBATCH --time=00-24:00:00               # Time limit hrs:min:sec
+#SBATCH --output=/scratch/nf26742/scratch/log.%j.out  # Standard output log
+#SBATCH --error=/scratch/nf26742/scratch/log.%j.err   # Standard error log
+
+#SBATCH --mail-type=END,FAIL             # Mail events (NONE, BEGIN, END, FAIL, ALL)
+#SBATCH --mail-user=nf26742@uga.edu      # Where to send mail
 
 # Output directory
-OUTDIR="/scratch/nf26742/USA_Bovis_Human"
+OUTDIR="/scratch/nf26742/Mex_USA_Animal_Bovis"
 mkdir -p "$OUTDIR"
 
 # Load required modules
