@@ -12,7 +12,7 @@
 #SBATCH --mail-user=nf26742@uga.edu      # Where to send mail
 
 # Output directories
-OUTDIR="/scratch/nf26742/USA_Bovis_Human"
+OUTDIR="/scratch/nf26742/Mex_USA_Animal_Bovis"
 TMPDIR="/scratch/nf26742/tmp"
 mkdir -p "$OUTDIR" "$TMPDIR"
 
