@@ -12,7 +12,7 @@
 #SBATCH --mail-user=nf26742@uga.edu      # Where to send mail
 
 # Specify output directory
-OUTDIR="/scratch/nf26742/Mex_USA_Animal_Bovis"
+OUTDIR="/lustre2/scratch/nf26742/Mex_USA_Animal_Bovis"
 
 #Create output directory if it doesn't exist
 mkdir -p "$OUTDIR"
@@ -917,7 +917,7 @@ for srr in "${accessions[@]}"; do
 
     fasterq-dump "$srr" -O "$OUTDIR" --threads 8
     if [[ $? -eq 0 ]]; then
-        echo "✅ Successfully downloaded and converted $srr"
+        echo "✅ Successfully downloaded $srr"
     else
         echo "⚠️  NCBI failed"
     fi
