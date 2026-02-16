@@ -11,6 +11,9 @@
 #SBATCH --mail-type=END,FAIL             # Mail events (NONE, BEGIN, END, FAIL, ALL)
 #SBATCH --mail-user=nf26742@uga.edu      # Where to send mail
 
+set -e
+
+
 # Specify output directory
 OUTDIR="/lustre2/scratch/nf26742/Mex_USA_Animal_Bovis"
 
