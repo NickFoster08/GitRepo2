@@ -11,8 +11,12 @@
 #SBATCH --mail-type=END,FAIL             # Mail events (NONE, BEGIN, END, FAIL, ALL)
 #SBATCH --mail-user=nf26742@uga.edu      # Where to send mail
 
-set -e
+#navigate to directory home 
+cd /lustre2/scratch/nf26742
 
+#generate tmp dir
+TMPDIR="/lustre2/scratch/nf26742/tmp"
+mkdir -p "$TMPDIR"
 
 # Specify output directory
 OUTDIR="/lustre2/scratch/nf26742/Mex_USA_Animal_Bovis"
@@ -916,12 +920,12 @@ SRR1792454
 )
 
 for srr in "${accessions[@]}"; do
-    echo "🔄 Downloading $srr from NCBI"
+    echo "Downloading $srr from NCBI"
 
-    fasterq-dump "$srr" -O "$OUTDIR" --threads 8
+    fasterq-dump "$srr" -O "$OUTDIR" --threads 8 --temp "$TMPDIR"
     if [[ $? -eq 0 ]]; then
-        echo "✅ Successfully downloaded $srr"
+        echo "Successfully downloaded $srr"
     else
-        echo "⚠️  NCBI failed"
+        echo "Failed"
     fi
 done
