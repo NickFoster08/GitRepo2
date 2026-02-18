@@ -10,11 +10,13 @@
 #SBATCH --mail-type=END,FAIL               # Mail events (NONE, BEGIN, END, FAIL, ALL)
 #SBATCH --mail-user=nf26742@uga.edu        # Where to send mail
 
-module load  pigz/2.8-GCCcore-13.3.0
+module load pigz/2.8-GCCcore-13.3.0
 
 cd /lustre2/scratch/nf26742/Mex_USA_Animal_Bovis
 
-# Gzip only uncompressed .fastq files
+# Compress only uncompressed .fastq files
 for f in *.fastq; do
-    [ -f "$f" ] && pigz -p 8 "$f"
+    if [ -f "$f" ] && [[ "$f" != *.gz ]]; then
+        pigz -p 8 "$f"
+    fi
 done
