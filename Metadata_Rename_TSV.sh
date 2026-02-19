@@ -17,7 +17,7 @@ OUTDIR="/lustre2/scratch/nf26742/Mex_USA_Animal_Bovis"
 mkdir -p "$OUTDIR"
 
 #Path to the metadata TSV file
-METADATA="/lustre2/scratch/nf26742/Mex_USA_Animal_Bovis/USA_MEX_ANIMAL_MASTERLIST.tsv"
+METADATA="/lustre2/scratch/nf26742/Mex_USA_Animal_Bovis/Mexico_USA_Metadata.tsv"
 
 echo "Running script: $0"
 echo "Current working directory: $(pwd)"
@@ -50,10 +50,10 @@ echo "Columns found:"
 echo "$header" | tr '\t' '\n' | nl
 
 #Define all columns BEFORE the check
-country_col=$(echo "$header" | tr '\t' '\n' | grep -n -i '^country$' | cut -d: -f1)
-date_col=$(echo "$header" | tr '\t' '\n' | grep -n -i '^collection_Date$' | cut -d: -f1)
-host_col=$(echo "$header" | tr '\t' '\n' | grep -n -i '^host$' | cut -d: -f1)
-run_col=$(echo "$header" | tr '\t' '\n' | grep -n -i '^accession_id$' | cut -d: -f1)
+country_col=$(echo "$header" | tr '\t' '\n' | grep -n -i '^geo_loc_name$' | cut -d: -f1)
+date_col=$(echo "$header" | tr '\t' '\n' | grep -n -i '^Collection_Date$' | cut -d: -f1)
+host_col=$(echo "$header" | tr '\t' '\n' | grep -n -i '^HOST$' | cut -d: -f1)
+run_col=$(echo "$header" | tr '\t' '\n' | grep -n -i '^Run$' | cut -d: -f1)
 
 if [[ -z $geo_col || -z $host_col || -z $date_col || -z $run_col ]]; then
     echo "❌ Error: Could not find one or more required columns in the metadata header."
