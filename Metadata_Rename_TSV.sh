@@ -10,14 +10,14 @@
 #SBATCH --mail-type=END,FAIL              # Mail events
 #SBATCH --mail-user=nf26742@uga.edu       # Where to send mail
 
-# Specify output directory
-OUTDIR="/scratch/nf26742/MI_Bovis_Any"
+#Specify output directory
+OUTDIR="/lustre2/scratch/nf26742/Mex_USA_Animal_Bovis"
 
-# Create output directory if it doesn't exist
+#Create output directory if it doesn't exist
 mkdir -p "$OUTDIR"
 
-# Path to the metadata TSV file
-METADATA="/scratch/nf26742/MI_Bovis_Any/MIBovMD_tab.tsv"
+#Path to the metadata TSV file
+METADATA="/lustre2/scratch/nf26742/Mex_USA_Animal_Bovis/USA_MEX_ANIMAL_MASTERLIST.tsv"
 
 echo "Running script: $0"
 echo "Current working directory: $(pwd)"
@@ -30,16 +30,16 @@ else
     echo "Metadata file DOES NOT exist or is NOT accessible."
 fi
 
-# Ensure metadata file exists
+#Ensure metadata file exists
 if [[ ! -f "$METADATA" ]]; then
     echo "❌ Metadata file not found: $METADATA"
     exit 1
 fi
 
-# Sanitize metadata file for Windows line endings (in-place)
+#Sanitize metadata file for Windows line endings (in-place)
 sed -i 's/\r$//' "$METADATA"
 
-# Read header and determine column positions (strip \r just in case)
+#Read header and determine column positions (strip \r just in case)
 header=$(head -n 1 "$METADATA" | tr -d '\r')
 
 echo "🔍 METADATA variable is: '$METADATA'"
@@ -49,11 +49,11 @@ ls -lh "$METADATA"
 echo "Columns found:"
 echo "$header" | tr '\t' '\n' | nl
 
-# ✅ Define all columns BEFORE the check
-country_col=$(echo "$header" | tr '\t' '\n' | grep -n -i '^country$' | cut -d: -f1)
-host_col=$(echo "$header" | tr '\t' '\n' | grep -n -i '^host$' | cut -d: -f1)
-date_col=$(echo "$header" | tr '\t' '\n' | grep -n -i '^collection_date$' | cut -d: -f1)
-run_col=$(echo "$header" | tr '\t' '\n' | grep -n -i '^run$' | cut -d: -f1)
+#Define all columns BEFORE the check
+country_col=$(echo "$header" | tr '\t' '\n' | grep -n -i '^geo_loc_name_country$' | cut -d: -f1)
+date_col=$(echo "$header" | tr '\t' '\n' | grep -n -i '^Collection_Date$' | cut -d: -f1)
+host_col=$(echo "$header" | tr '\t' '\n' | grep -n -i '^HOST$' | cut -d: -f1)
+run_col=$(echo "$header" | tr '\t' '\n' | grep -n -i '^Run$' | cut -d: -f1)
 
 if [[ -z $geo_col || -z $host_col || -z $date_col || -z $run_col ]]; then
     echo "❌ Error: Could not find one or more required columns in the metadata header."
@@ -61,7 +61,7 @@ if [[ -z $geo_col || -z $host_col || -z $date_col || -z $run_col ]]; then
     exit 1
 fi
 
-# Process each line (skip header)
+#Process each line (skip header)
 tail -n +2 "$METADATA" | while IFS=$'\t' read -r -a fields; do
     host="${fields[$((host_col-1))]}"
     date="${fields[$((date_col-1))]}"
