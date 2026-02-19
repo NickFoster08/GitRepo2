@@ -21,8 +21,8 @@ echo "Working directory: $(pwd)"
 mkdir -p "$OUTDIR"
 
 # Clean metadata
-sed -i 's/\r$//' "$METADATA"               # Remove Windows CR
-sed -i '1s/^\xEF\xBB\xBF//' "$METADATA"   # Remove BOM
+sed -i 's/\r$//' "$METADATA"
+sed -i '1s/^\xEF\xBB\xBF//' "$METADATA"
 
 # Read header
 header=$(head -n1 "$METADATA")
@@ -41,8 +41,11 @@ fi
 
 echo "Columns detected: Run=$run_col, Date=$date_col, Country=$country_col, Host=$host_col"
 
-# Process rows
-tail -n +2 "$METADATA" | while IFS=',' read -r -a fields; do
+# Process rows (using while-read without pipe to avoid subshell)
+while IFS=',' read -r -a fields; do
+    # Skip header line
+    [[ "${fields[0]}" == "Run" ]] && continue
+
     runid=$(echo "${fields[$((run_col-1))]}" | xargs)
     date=$(echo "${fields[$((date_col-1))]}" | xargs)
     host=$(echo "${fields[$((host_col-1))]}" | xargs)
@@ -59,13 +62,15 @@ tail -n +2 "$METADATA" | while IFS=',' read -r -a fields; do
     new_r1="${OUTDIR}/${newbase}_1.fastq.gz"
     new_r2="${OUTDIR}/${newbase}_2.fastq.gz"
 
+    # Check if original FASTQ files exist
     if [[ -f "$r1" && -f "$r2" ]]; then
         mv "$r1" "$new_r1"
         mv "$r2" "$new_r2"
         echo "Renamed $runid -> $newbase"
     else
-        echo "Missing FASTQ files for $runid"
+        # Skip if files are already renamed or missing
+        echo "Skipping $runid (already renamed or missing)"
     fi
-done
+done < "$METADATA"
 
 echo "Renaming complete."
