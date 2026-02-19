@@ -69,11 +69,11 @@ tail -n +2 "$METADATA" | while IFS=',' read -r -a fields; do
 
     newbase="${safe_host}_${safe_date}-${runid}"
 
-    r1="${OUTDIR}/${runid}_1.fastq"
-    r2="${OUTDIR}/${runid}_2.fastq"
+    r1="${OUTDIR}/${runid}_1.fastq.gz"
+    r2="${OUTDIR}/${runid}_2.fastq.gz"
 
-    new_r1="${OUTDIR}/${newbase}_1.fastq"
-    new_r2="${OUTDIR}/${newbase}_2.fastq"
+    new_r1="${OUTDIR}/${newbase}_1.fastq.gz"
+    new_r2="${OUTDIR}/${newbase}_2.fastq.gz"
 
     echo "Checking: $r1 and $r2"
 
