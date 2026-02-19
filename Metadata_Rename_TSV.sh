@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=MI_Bovis_Rename        # Job name
+#SBATCH --job-name=CSV_Rename        # Job name
 #SBATCH --partition=batch                 # Partition (queue) name
 #SBATCH --ntasks=1                        # Run on a single CPU
 #SBATCH --cpus-per-task=8                 # Number of cores per task
@@ -47,22 +47,22 @@ echo "📂 Listing file:"
 ls -lh "$METADATA"
 
 echo "Columns found:"
-echo "$header" | tr '\t' '\n' | nl
+echo "$header" | tr ',' '\n' | nl
 
 #Define all columns BEFORE the check
-country_col=$(echo "$header" | tr '\t' '\n' | grep -n -i '^geo_loc_name$' | cut -d: -f1)
-date_col=$(echo "$header" | tr '\t' '\n' | grep -n -i '^Collection_Date$' | cut -d: -f1)
-host_col=$(echo "$header" | tr '\t' '\n' | grep -n -i '^HOST$' | cut -d: -f1)
-run_col=$(echo "$header" | tr '\t' '\n' | grep -n -i '^Run$' | cut -d: -f1)
+country_col=$(echo "$header" | tr ',' '\n' | grep -n -i '^geo_loc_name$' | cut -d: -f1)
+date_col=$(echo "$header" | tr ',' '\n' | grep -n -i '^Collection_Date$' | cut -d: -f1)
+host_col=$(echo "$header" | tr ',' '\n' | grep -n -i '^HOST$' | cut -d: -f1)
+run_col=$(echo "$header" | tr ',' '\n' | grep -n -i '^Run$' | cut -d: -f1)
+if [[ -z $country_col || -z $host_col || -z $date_col || -z $run_col ]]; then
 
-if [[ -z $geo_col || -z $host_col || -z $date_col || -z $run_col ]]; then
     echo "❌ Error: Could not find one or more required columns in the metadata header."
     echo "Header: $header"
     exit 1
 fi
 
 #Process each line (skip header)
-tail -n +2 "$METADATA" | while IFS=$'\t' read -r -a fields; do
+tail -n +2 "$METADATA" | while IFS=$',' read -r -a fields; do
     host="${fields[$((host_col-1))]}"
     date="${fields[$((date_col-1))]}"
     runid="${fields[$((run_col-1))]}"
