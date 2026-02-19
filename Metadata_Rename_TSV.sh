@@ -20,16 +20,11 @@ echo "Working directory: $(pwd)"
 
 mkdir -p "$OUTDIR"
 
-if [[ ! -f "$METADATA" ]]; then
-    echo "ERROR: Metadata file not found: $METADATA"
-    exit 1
-fi
-
-echo "Metadata file located:"
-ls -lh "$METADATA"
-
 # Remove Windows carriage returns
 sed -i 's/\r$//' "$METADATA"
+
+# Remove UTF-8 BOM if present
+sed -i '1s/^\xEF\xBB\xBF//' "$METADATA"
 
 # Extract header
 header=$(head -n 1 "$METADATA")
