@@ -46,9 +46,9 @@ while IFS=',' read -r -a fields; do
     # Skip header line
     [[ "${fields[0]}" == "Run" ]] && continue
 
-    runid=$(echo "${fields[$((run_col-1))]}" | xargs)
-    date=$(echo "${fields[$((date_col-1))]}" | xargs)
-    host=$(echo "${fields[$((host_col-1))]}" | xargs)
+runid=$(echo "${fields[$((run_col-1))]}" | tr -d '"' | xargs)
+date=$(echo "${fields[$((date_col-1))]}" | tr -d '"' | xargs)
+host=$(echo "${fields[$((host_col-1))]}" | tr -d '"' | xargs)
 
     [[ -z "$runid" ]] && continue
 
