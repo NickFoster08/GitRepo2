@@ -10,84 +10,86 @@
 #SBATCH --mail-type=END,FAIL              # Mail events
 #SBATCH --mail-user=nf26742@uga.edu       # Where to send mail
 
-#Specify output directory
+set -euo pipefail
+
 OUTDIR="/lustre2/scratch/nf26742/Mex_USA_Animal_Bovis"
-
-#Create output directory if it doesn't exist
-mkdir -p "$OUTDIR"
-
-#Path to the metadata TSV file
 METADATA="/lustre2/scratch/nf26742/Mex_USA_Animal_Bovis/Mexico_USA_Metadata.tsv"
 
 echo "Running script: $0"
-echo "Current working directory: $(pwd)"
-echo "Listing current dir:"
-ls -lh
-echo "Checking METADATA file path: $METADATA"
-if [[ -f "$METADATA" ]]; then
-    echo "Metadata file exists and is accessible."
-else
-    echo "Metadata file DOES NOT exist or is NOT accessible."
-fi
+echo "Working directory: $(pwd)"
 
-#Ensure metadata file exists
+mkdir -p "$OUTDIR"
+
 if [[ ! -f "$METADATA" ]]; then
-    echo "❌ Metadata file not found: $METADATA"
+    echo "ERROR: Metadata file not found: $METADATA"
     exit 1
 fi
 
-#Sanitize metadata file for Windows line endings (in-place)
-sed -i 's/\r$//' "$METADATA"
-
-#Read header and determine column positions (strip \r just in case)
-header=$(head -n 1 "$METADATA" | tr -d '\r')
-
-echo "🔍 METADATA variable is: '$METADATA'"
-echo "📂 Listing file:"
+echo "Metadata file located:"
 ls -lh "$METADATA"
 
-echo "Columns found:"
-echo "$header" | tr ',' '\n' | nl
+# Remove Windows carriage returns
+sed -i 's/\r$//' "$METADATA"
 
-#Define all columns BEFORE the check
-country_col=$(echo "$header" | tr ',' '\n' | grep -n -i '^geo_loc_name$' | cut -d: -f1)
-date_col=$(echo "$header" | tr ',' '\n' | grep -n -i '^Collection_Date$' | cut -d: -f1)
-host_col=$(echo "$header" | tr ',' '\n' | grep -n -i '^HOST$' | cut -d: -f1)
-run_col=$(echo "$header" | tr ',' '\n' | grep -n -i '^Run$' | cut -d: -f1)
-if [[ -z $country_col || -z $host_col || -z $date_col || -z $run_col ]]; then
+# Extract header
+header=$(head -n 1 "$METADATA")
+echo "Header:"
+echo "$header"
 
-    echo "❌ Error: Could not find one or more required columns in the metadata header."
-    echo "Header: $header"
+# Detect column positions safely using awk
+run_col=$(echo "$header" | awk -F',' '{for(i=1;i<=NF;i++) if($i=="Run") print i}')
+date_col=$(echo "$header" | awk -F',' '{for(i=1;i<=NF;i++) if($i=="Collection_Date") print i}')
+country_col=$(echo "$header" | awk -F',' '{for(i=1;i<=NF;i++) if($i=="geo_loc_name") print i}')
+host_col=$(echo "$header" | awk -F',' '{for(i=1;i<=NF;i++) if($i=="HOST") print i}')
+
+echo "Detected columns:"
+echo "Run: $run_col"
+echo "Collection_Date: $date_col"
+echo "geo_loc_name: $country_col"
+echo "HOST: $host_col"
+
+if [[ -z "$run_col" || -z "$date_col" || -z "$country_col" || -z "$host_col" ]]; then
+    echo "ERROR: Required columns not found in metadata."
     exit 1
 fi
 
-#Process each line (skip header)
-tail -n +2 "$METADATA" | while IFS=$',' read -r -a fields; do
-    host="${fields[$((host_col-1))]}"
-    date="${fields[$((date_col-1))]}"
+# Process file
+tail -n +2 "$METADATA" | while IFS=',' read -r -a fields; do
+
     runid="${fields[$((run_col-1))]}"
+    date="${fields[$((date_col-1))]}"
+    host="${fields[$((host_col-1))]}"
 
-    # Trim whitespace from runid
+    # Trim whitespace
     runid=$(echo "$runid" | xargs)
+    date=$(echo "$date" | xargs)
+    host=$(echo "$host" | xargs)
 
-    # Clean strings for filenames
+    # Skip empty lines
+    [[ -z "$runid" ]] && continue
+
+    # Clean for filenames
     safe_host=$(echo "$host" | sed 's/ /_/g' | sed 's/[^a-zA-Z0-9_-]//g')
     safe_date=$(echo "$date" | sed 's#[/: ]#_#g' | sed 's/[^a-zA-Z0-9_-]//g')
 
-    # Compose new file names
     newbase="${safe_host}_${safe_date}-${runid}"
+
     r1="${OUTDIR}/${runid}_1.fastq"
     r2="${OUTDIR}/${runid}_2.fastq"
+
     new_r1="${OUTDIR}/${newbase}_1.fastq"
     new_r2="${OUTDIR}/${newbase}_2.fastq"
 
-    echo "🔎 Looking for files: $r1 and $r2"
+    echo "Checking: $r1 and $r2"
 
     if [[ -f "$r1" && -f "$r2" ]]; then
         mv "$r1" "$new_r1"
         mv "$r2" "$new_r2"
-        echo "✅ Renamed $runid to $newbase"
+        echo "Renamed $runid -> $newbase"
     else
-        echo "⚠️  One or both FASTQ files missing for $runid"
+        echo "FASTQ files missing for $runid"
     fi
+
 done
+
+echo "Renaming complete."
