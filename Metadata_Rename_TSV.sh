@@ -29,9 +29,9 @@ header=$(head -n1 "$METADATA")
 echo "Header: $header"
 
 # Detect column positions
-run_col=$(echo "$header" | awk -F',' '{for(i=1;i<=NF;i++) if($i=="Run") print i}')
-date_col=$(echo "$header" | awk -F',' '{for(i=1;i<=NF;i++) if($i=="Collection_Date") print i}')
-country_col=$(echo "$header" | awk -F',' '{for(i=1;i<=NF;i++) if($i=="geo_loc_name") print i}')
+run_col=$(echo "$header" | awk -F',' '{for(i=1;i<=NF;i++) if($i=="Run_") print i}')
+date_col=$(echo "$header" | awk -F',' '{for(i=1;i<=NF;i++) if($i=="Collection_Date_") print i}')
+country_col=$(echo "$header" | awk -F',' '{for(i=1;i<=NF;i++) if($i=="geo_loc_name_") print i}')
 host_col=$(echo "$header" | awk -F',' '{for(i=1;i<=NF;i++) if($i=="HOST") print i}')
 
 if [[ -z "$run_col" || -z "$date_col" || -z "$country_col" || -z "$host_col" ]]; then
