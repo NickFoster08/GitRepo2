@@ -26,7 +26,7 @@ cd "$OUTDIR"
 
 # Prepare FOFN
 bactopia prepare \
-  --path /scratch/nf26742/USA_Bovis_Human\
+  --path /lustre2/scratch/nf26742/Mex_USA_Animal_Bovis\
   --species "Mycobacterium bovis" \
   --genome-size 4400000 \
   > $OUTDIR/samples.txt
