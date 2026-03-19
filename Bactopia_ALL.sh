@@ -4,7 +4,7 @@
 #SBATCH --ntasks=1                    # Run on a single CPU
 #SBATCH --cpus-per-task=4             #number of cores per task
 #SBATCH --mem=40GB                     # Job memory request
-#SBATCH --time=07-00:00:00               # Time limit hrs:min:sec
+#SBATCH --time= 7-00:00:00               # Time limit hrs:min:sec
 #SBATCH --output=/scratch/nf26742/scratch/log.%j.out    # Standard output log
 #SBATCH --error=/scratch/nf26742/scratch/log.%j.err     # Standard error log
 
@@ -13,7 +13,7 @@
 
 
 # Set output directory variable
-OUTDIR="/scratch/nf26742/rerun_2025/job_${SLURM_JOB_ID}"
+OUTDIR="/scratch/nf26742/rerun_2025/job_42972975"
 
 # Make output directory if it doesn't exist
 mkdir -p "$OUTDIR"
@@ -36,4 +36,5 @@ bactopia \
  --samples $OUTDIR/samples.txt \
  --coverage 100 \
  --max_cpus 4 \
- --outdir "$OUTDIR"
+ --outdir "$OUTDIR"\
+ --resume 
