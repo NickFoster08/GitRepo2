@@ -37,4 +37,4 @@ bactopia \
  --coverage 100 \
  --max_cpus 4 \
  --outdir "$OUTDIR"\
- --resume 
+ -resume 
