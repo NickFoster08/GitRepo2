@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=Bactopia_Step2_Americas_Bovis        # Job name
 #SBATCH --partition=batch             # Partition (queue) name
-#SBATCH --ntasks=1                    # Run on a single CPU
+#SBATCH --ntasks=8                    # Run on a single CPU
 #SBATCH --cpus-per-task=4             #number of cores per task
 #SBATCH --mem=40GB                     # Job memory request
 #SBATCH --time=04-00:00:00               # Time limit hrs:min:sec
