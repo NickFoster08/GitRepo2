@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name= parallel_bovis    # Job name
+#SBATCH --job-name=parallel_bovis    # Job name
 #SBATCH --partition=batch                       # Partition (queue) name
 #SBATCH --ntasks=8                               # Number of parallel tasks (samples)
 #SBATCH --cpus-per-task=4                        # CPUs per task
@@ -33,5 +33,4 @@ bactopia \
  --samples $OUTDIR/samples.txt \
  --coverage 100 \
  --outdir "$OUTDIR" \
- -profile slurm \
- -resume
+ -profile slurm 
