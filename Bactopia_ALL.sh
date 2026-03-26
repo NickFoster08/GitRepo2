@@ -13,7 +13,7 @@
 
 
 # Set output directory variable
-OUTDIR="/scratch/nf26742/rerun_2025/job_42972975"
+OUTDIR="/scratch/nf26742/rerun_2025/job_${SLURM_JOB_ID}"
 
 # Make output directory if it doesn't exist
 mkdir -p "$OUTDIR"
@@ -36,5 +36,4 @@ bactopia \
  --samples $OUTDIR/samples.txt \
  --coverage 100 \
  --max_cpus 4 \
- --outdir "$OUTDIR"\
- -resume 
+ --outdir "$OUTDIR"
