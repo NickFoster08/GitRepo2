@@ -1,9 +1,9 @@
 #!/bin/bash
 #SBATCH --job-name=Bactopia_Step2_Americas_Bovis        # Job name
 #SBATCH --partition=batch             # Partition (queue) name
-#SBATCH --ntasks=8                    # Run on a single CPU
-#SBATCH --cpus-per-task=4             #number of cores per task
-#SBATCH --mem=40GB                     # Job memory request
+#SBATCH --ntasks=1                    # Run on a single CPU
+#SBATCH --cpus-per-task=12             #number of cores per task
+#SBATCH --mem=120GB                     # Job memory request
 #SBATCH --time=04-00:00:00               # Time limit hrs:min:sec
 #SBATCH --output=/scratch/nf26742/scratch/log.%j.out    # Standard output log
 #SBATCH --error=/scratch/nf26742/scratch/log.%j.err     # Standard error log
@@ -24,8 +24,8 @@ fi
 module load Bactopia/3.2.0
 
 #move to workdir
-cd /scratch/nf26742/rerun_2025/job_42972975
+cd /scratch/nf26742/rerun_2025/job_43913418
 
 #Create summary files from bactopia pipeline on samples
 bactopia summary \
-    --bactopia-path /scratch/nf26742/rerun_2025/job_42972975
+    --bactopia-path /scratch/nf26742/rerun_2025/job_43913418
