@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=SNIPPY_USA_BOVIS     # Job name
+#SBATCH --job-name=SNIPPY_Americas_BOVIS     # Job name
 #SBATCH --partition=batch             # Partition (queue) name
 #SBATCH --ntasks=1                    # Run on a single CPU
 #SBATCH --cpus-per-task=4             #number of cores per task
@@ -16,7 +16,7 @@ set -e
 
 REFERENCE=/home/nf26742/vsnp3_test_dataset/vsnp_dependencies/Mycobacterium_AF2122
 
-OUTDIR=/scratch/nf26742/rerun_2025/job_41187889
+OUTDIR=/scratch/nf26742/rerun_2025/job_43913418
 
 #Tells the program to make the ourdir folder if it cant find it
 if [ ! -d $OUTDIR ] 
