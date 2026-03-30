@@ -22,6 +22,9 @@ then
     mkdir -p $OUTDIR
 fi
 
+#find the stupuid library plz
+export LD_LIBRARY_PATH=/apps/eb/Bactopia/3.2.0-conda/lib:$LD_LIBRARY_PATH
+
 #Load modules
 module load Bactopia/3.2.0-conda
 
