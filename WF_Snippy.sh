@@ -25,6 +25,7 @@ then
 fi
 
 #Load modules
+module load Java/17.0.6
 module load Bactopia/3.2.0
 
 #move to workdir
