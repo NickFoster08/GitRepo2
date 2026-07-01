@@ -12,7 +12,7 @@
 
 module load pigz/2.8-GCCcore-13.3.0
 
-cd /lustre2/scratch/nf26742/Mex_USA_Animal_Bovis
+cd /lustre2/scratch/nf26742/Mbovis_Africa_Europe
 
 # Compress only uncompressed .fastq files
 for f in *.fastq; do
