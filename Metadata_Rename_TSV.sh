@@ -31,8 +31,8 @@ echo "Header: $header"
 # Detect column positions (TAB delimiter)
 run_col=$(echo "$header" | awk -F'\t' '{for(i=1;i<=NF;i++) if($i=="Run") print i}')
 date_col=$(echo "$header" | awk -F'\t' '{for(i=1;i<=NF;i++) if($i=="Collection_Date") print i}')
-country_col=$(echo "$header" | awk -F'\t' '{for(i=1;i<=NF;i++) if($i=="geo_loc_name") print i}')
-host_col=$(echo "$header" | awk -F'\t' '{for(i=1;i<=NF;i++) if($i=="HOST") print i}')
+country_col=$(echo "$header" | awk -F'\t' '{for(i=1;i<=NF;i++) if($i=="geo_loc_name_country") print i}')
+host_col=$(echo "$header" | awk -F'\t' '{for(i=1;i<=NF;i++) if($i=="Host") print i}')
 
 if [[ -z "$run_col" || -z "$date_col" || -z "$country_col" || -z "$host_col" ]]; then
     echo "ERROR: Required columns not found."
