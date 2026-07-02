@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=USA_CDC_Bov      # Job name
+#SBATCH --job-name=NCBI_Download_SRR_Accession      # Job name
 #SBATCH --partition=batch                # Partition (queue) name
 #SBATCH --ntasks=1                       # Run on a single CPU
 #SBATCH --cpus-per-task=8                # Number of cores per task
