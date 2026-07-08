@@ -13,7 +13,7 @@
 set -euo pipefail
  
 OUTDIR="/lustre2/scratch/nf26742/Mbovis_Africa_Europe"
-METADATA="/lustre2/scratch/nf26742/Mbovis_Africa_Europe/Italy_Metadata_Clean.tsv"
+METADATA="/lustre2/scratch/nf26742/Mbovis_Africa_Europe/Portugal_Metadata_Clean.tsv"
  
 echo "Running script: $0"
 echo "Working directory: $(pwd)"
