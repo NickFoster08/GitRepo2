@@ -58,24 +58,36 @@ while IFS=$'\t' read -r -a fields; do
     safe_date=$(echo "$date" | sed 's#[/: ]#_#g' | sed 's/[^a-zA-Z0-9_-]//g')
     safe_country=$(echo "$country" | sed 's/ /_/g' | sed 's/[^a-zA-Z0-9_-]//g')
  
-    # New naming format: Location_Host_Date_Run
     newbase="${safe_country}_${safe_host}_${safe_date}_${runid}"
- 
-    # Find existing files by matching the runid, regardless of current prefix
-    # (handles both raw SRR-named files and files already renamed by a prior pass)
+
+    # Try paired-end first
     r1=$(find "$OUTDIR" -maxdepth 1 -type f \( -name "${runid}_1.fastq.gz" -o -name "*-${runid}_1.fastq.gz" -o -name "*_${runid}_1.fastq.gz" \) | head -n1)
     r2=$(find "$OUTDIR" -maxdepth 1 -type f \( -name "${runid}_2.fastq.gz" -o -name "*-${runid}_2.fastq.gz" -o -name "*_${runid}_2.fastq.gz" \) | head -n1)
- 
+
     new_r1="${OUTDIR}/${newbase}_1.fastq.gz"
     new_r2="${OUTDIR}/${newbase}_2.fastq.gz"
- 
+
     if [[ -n "$r1" && -n "$r2" ]]; then
         if [[ "$r1" == "$new_r1" && "$r2" == "$new_r2" ]]; then
-            echo "Already correctly named: $runid -> $newbase"
+            echo "Already correctly named (paired): $runid -> $newbase"
         else
             mv "$r1" "$new_r1"
             mv "$r2" "$new_r2"
-            echo "Renamed $runid -> $newbase"
+            echo "Renamed (paired) $runid -> $newbase"
+        fi
+        continue
+    fi
+
+    # Fall back to single-end
+    se=$(find "$OUTDIR" -maxdepth 1 -type f \( -name "${runid}.fastq.gz" -o -name "*-${runid}.fastq.gz" -o -name "*_${runid}.fastq.gz" \) | head -n1)
+    new_se="${OUTDIR}/${newbase}.fastq.gz"
+
+    if [[ -n "$se" ]]; then
+        if [[ "$se" == "$new_se" ]]; then
+            echo "Already correctly named (single-end): $runid -> $newbase"
+        else
+            mv "$se" "$new_se"
+            echo "Renamed (single-end) $runid -> $newbase"
         fi
     else
         echo "Skipping $runid (files not found)"
