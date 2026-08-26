@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=Bactopia_Euro_Afri_Bovis        # Job name
+#SBATCH --job-name=Bactopia_Euro_Afr_Bovis        # Job name
 #SBATCH --partition=batch             # Partition (queue) name
 #SBATCH --ntasks=1                  # Run on a single CPU
 #SBATCH --cpus-per-task=12       #number of cores per task
