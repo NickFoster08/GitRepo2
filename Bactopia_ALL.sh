@@ -3,7 +3,7 @@
 #SBATCH --partition=hugemem_p             # Partition (queue) name
 #SBATCH --ntasks=1                  # Run on a single CPU
 #SBATCH --cpus-per-task=32       #number of cores per task
-#SBATCH --mem=1 T                    # Job memory request
+#SBATCH --mem=1tb                   # Job memory request
 #SBATCH --time=07-0:00:00               # Time limit hrs:min:sec
 #SBATCH --output=/scratch/nf26742/scratch/log.%j.out    # Standard output log
 #SBATCH --error=/scratch/nf26742/scratch/log.%j.err     # Standard error log
