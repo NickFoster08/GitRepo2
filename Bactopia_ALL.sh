@@ -1,9 +1,9 @@
 #!/bin/bash
 #SBATCH --job-name=Bactopia_Euro_Afr_Bovis        # Job name
-#SBATCH --partition=batch             # Partition (queue) name
+#SBATCH --partition=hugemem_p             # Partition (queue) name
 #SBATCH --ntasks=1                  # Run on a single CPU
-#SBATCH --cpus-per-task=12       #number of cores per task
-#SBATCH --mem=120GB                     # Job memory request
+#SBATCH --cpus-per-task=32       #number of cores per task
+#SBATCH --mem=1 T                    # Job memory request
 #SBATCH --time=07-0:00:00               # Time limit hrs:min:sec
 #SBATCH --output=/scratch/nf26742/scratch/log.%j.out    # Standard output log
 #SBATCH --error=/scratch/nf26742/scratch/log.%j.err     # Standard error log
@@ -37,6 +37,6 @@ fi
 bactopia \
  --samples $OUTDIR/samples.txt \
  --coverage 100 \
- --max_cpus 12 \
+ --max_cpus 64 \
  --outdir "$OUTDIR" \
  -resume
