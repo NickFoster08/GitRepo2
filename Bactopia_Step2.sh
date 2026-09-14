@@ -1,16 +1,15 @@
 #!/bin/bash
-#SBATCH --job-name=Bactopia_Step2_Americas_Bovis        # Job name
-#SBATCH --partition=batch             # Partition (queue) name
-#SBATCH --ntasks=1                    # Run on a single CPU
-#SBATCH --cpus-per-task=12             #number of cores per task
-#SBATCH --mem=120GB                     # Job memory request
-#SBATCH --time=04-00:00:00               # Time limit hrs:min:sec
+#SBATCH --job-name=Bactopia_step_2_Euro_Afr_Bovis        # Job name
+#SBATCH --partition=batch_30d             # Partition (queue) name
+#SBATCH --ntasks=1                  # Run on a single CPU
+#SBATCH --cpus-per-task=16       #number of cores per task
+#SBATCH --mem=300gb                   # Job memory request
+#SBATCH --time=14-0:00:00               # Time limit hrs:min:sec
 #SBATCH --output=/scratch/nf26742/scratch/log.%j.out    # Standard output log
 #SBATCH --error=/scratch/nf26742/scratch/log.%j.err     # Standard error log
 
 #SBATCH --mail-type=END,FAIL          # Mail events (NONE, BEGIN, END, FAIL, ALL)
 #SBATCH --mail-user=nf26742@uga.edu  # Where to send mail (change username@uga.edu to your email address)
-
 #Specify outdir
 OUTDIR=/scratch/nf26742/Bactopia_Reports/run3
 
@@ -24,8 +23,8 @@ fi
 module load Bactopia/3.2.0
 
 #move to workdir
-cd /scratch/nf26742/rerun_2025/job_43913418
+cd /scratch/nf26742/rerun_2025/job_47709570
 
 #Create summary files from bactopia pipeline on samples
 bactopia summary \
-    --bactopia-path /scratch/nf26742/rerun_2025/job_43913418
+    --bactopia-path /scratch/nf26742/rerun_2025/job_47709570
