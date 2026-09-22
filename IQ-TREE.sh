@@ -13,13 +13,13 @@
 
 set -e
 
-OUTDIR=/scratch/nf26742/rerun_2025/job_41187889/bactopia-runs/snippy-20251121-145859/iqtree
+OUTDIR=/scratch/nf26742/rerun_2025/job_47709570/bactopia-runs/snippy-20260914-163539/iqtree
 
 # Make sure the output directory exists
 mkdir -p $OUTDIR
 
 # Move to the folder containing the alignment
-cd /scratch/nf26742/rerun_2025/job_41187889/bactopia-runs/snippy-20251121-145859/
+cd /scratch/nf26742/rerun_2025/job_47709570/bactopia-runs/snippy-20260914-163539/
 
 # Check that the cleaned alignment exists
 if [ ! -f core-snp-clean.full.aln ]; then
