@@ -39,4 +39,4 @@ bactopia \
     --exclude $OUTDIR/bactopia-exclude.tsv \
     --bactopia $OUTDIR \
     --nfconfig snpdists.config \
-    --resume
+    -resume
