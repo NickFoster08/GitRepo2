@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=IQTREE_USA_BOVIS     # Job name
+#SBATCH --job-name=IQTREE_EUR_AFR_BOVIS     # Job name
 #SBATCH --partition=batch             # Partition (queue) name
 #SBATCH --ntasks=1                    # Run on a single CPU
 #SBATCH --cpus-per-task=4             #number of cores per task
@@ -13,7 +13,7 @@
 
 set -e
 
-OUTDIR=/scratch/nf26742/rerun_2025/job_41187889/bactopia-runs/snippy-20251121-145859/iqtree_noRef
+OUTDIR=/scratch/nf26742/rerun_2025/job_41187889/bactopia-runs/snippy-20251121-145859/iqtree
 
 # Make sure the output directory exists
 mkdir -p $OUTDIR
@@ -22,8 +22,8 @@ mkdir -p $OUTDIR
 cd /scratch/nf26742/rerun_2025/job_41187889/bactopia-runs/snippy-20251121-145859/
 
 # Check that the cleaned alignment exists
-if [ ! -f core-snp.no_ref.fasta ]; then
-    echo "Error: core-snp.no_ref.fasta not found in this folder"
+if [ ! -f core-snp-clean.full.aln ]; then
+    echo "Error: core-snp-clean.full.aln not found in this folder"
     exit 1
 fi
 
@@ -31,6 +31,6 @@ fi
 module load IQ-TREE/3.0.1-gompi-2024a
 
 # Run IQ-TREE with outputs going into the clean folder
-iqtree3 -s core-snp.no_ref.fasta -m GTR -bb 1000 -nt AUTO -pre $OUTDIR/iqtree_full
+iqtree3 -s core-snp-clean.full.aln -m GTR -bb 1000 -nt AUTO -pre $OUTDIR/iqtree_full
 
 
