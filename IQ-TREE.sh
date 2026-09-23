@@ -33,7 +33,7 @@ module load IQ-TREE/3.0.1-gompi-2024a
 # Run IQ-TREE with outputs going into the clean folder
 iqtree3 \
  -s core-snp-clean.full.aln \
- -m GTR \
+ -m HKY+G4 \
  -bb 1000 \ 
  -nt 4 \
  -pre $OUTDIR/iqtree_full
