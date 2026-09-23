@@ -1,9 +1,9 @@
 #!/bin/bash
-#SBATCH --job-name=HM_IQTREE_EUR_AFR_BOVIS     # Job name
-#SBATCH --partition=hugemem_p        # Partition (queue) name
+#SBATCH --job-name=IQTREE_EUR_AFR_BOVIS     # Job name
+#SBATCH --partition=batch      # Partition (queue) name
 #SBATCH --ntasks=1                  # Run on a single CPU
 #SBATCH --cpus-per-task=4     #number of cores per task
-#SBATCH --mem=2tb                  # Job memory request
+#SBATCH --mem=500gb                  # Job memory request
 #SBATCH --time=07-00:00:00               # Time limit hrs:min:sec
 #SBATCH --output=/scratch/nf26742/scratch/log.%j.out    # Standard output log
 #SBATCH --error=/scratch/nf26742/scratch/log.%j.err     # Standard error log
