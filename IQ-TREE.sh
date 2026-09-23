@@ -34,8 +34,8 @@ module load IQ-TREE/3.0.1-gompi-2024a
 iqtree3 \
  -s core-snp-clean.full.aln \
  -m HKY+G4 \
- -bb 1000 \ 
+ -bb 1000 \
  -nt 4 \
- -pre $OUTDIR/iqtree_full
+ -pre "$OUTDIR/iqtree_full"
 
 
