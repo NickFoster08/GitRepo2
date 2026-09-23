@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --job-name=IQTREE_EUR_AFR_BOVIS     # Job name
-#SBATCH --partition=highmem_30d_p           # Partition (queue) name
+#SBATCH --partition=highmem_p          # Partition (queue) name
 #SBATCH --ntasks=1                  # Run on a single CPU
 #SBATCH --cpus-per-task=16       #number of cores per task
 #SBATCH --mem=600gb                   # Job memory request
