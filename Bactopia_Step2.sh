@@ -1,9 +1,9 @@
 #!/bin/bash
 #SBATCH --job-name=Bactopia_step_2_Euro_Afr_Bovis        # Job name
-#SBATCH --partition=batch_30d             # Partition (queue) name
+#SBATCH --partition=highmem_30d_p           # Partition (queue) name
 #SBATCH --ntasks=1                  # Run on a single CPU
 #SBATCH --cpus-per-task=16       #number of cores per task
-#SBATCH --mem=300gb                   # Job memory request
+#SBATCH --mem=600gb                   # Job memory request
 #SBATCH --time=14-0:00:00               # Time limit hrs:min:sec
 #SBATCH --output=/scratch/nf26742/scratch/log.%j.out    # Standard output log
 #SBATCH --error=/scratch/nf26742/scratch/log.%j.err     # Standard error log
