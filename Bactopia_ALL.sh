@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=Bactopia_Euro_Afr_Bovis        # Job name
+#SBATCH --job-name=Bactopia_Select_Euro_Afr_Bovis        # Job name
 #SBATCH --partition=batch_30d             # Partition (queue) name
 #SBATCH --ntasks=1                  # Run on a single CPU
 #SBATCH --cpus-per-task=16       #number of cores per task
@@ -11,9 +11,9 @@
 #SBATCH --mail-type=END,FAIL          # Mail events (NONE, BEGIN, END, FAIL, ALL)
 #SBATCH --mail-user=nf26742@uga.edu  # Where to send mail (change username@uga.edu to your email address)
 
-# "job_${SLURM_JOB_ID}" for future runs, job ID autofill
+
 # Set output directory variable
-OUTDIR="/scratch/nf26742/rerun_2025/job_47709570"
+OUTDIR="/scratch/nf26742/rerun_2025/job_${SLURM_JOB_ID}"
 
 # Make output directory if it doesn't exist
 mkdir -p "$OUTDIR"
@@ -27,7 +27,7 @@ cd "$OUTDIR"
 # Only recreate samples.txt if necessary
 if [ ! -f "$OUTDIR/samples.txt" ]; then
     bactopia prepare \
-      --path /lustre2/scratch/nf26742/Mbovis_Africa_Europe \
+      --path /scratch/nf26742/rerun_2025/job_47709570/PDA_Select_Genomes \
       --species "Mycobacterium bovis" \
       --genome-size 4400000 \
       > "$OUTDIR/samples.txt"
