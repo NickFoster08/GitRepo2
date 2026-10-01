@@ -27,4 +27,4 @@ cd /scratch/nf26742/rerun_2025/job_48673716
 
 #Create summary files from bactopia pipeline on samples
 bactopia summary \
-    --bactopia-path 
+    --bactopia-path /scratch/nf26742/rerun_2025/job_48673716/
