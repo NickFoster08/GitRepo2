@@ -37,5 +37,7 @@ bactopia \
     -resume \
     --reference $REFERENCE/NC_002945v4.gbk \
     --exclude $OUTDIR/bactopia-exclude.tsv \
-    --bactopia $OUTDIR \
+    --skip_phylogeny FALSE \
+    --skip_gubbins FALSE \
+    --bactopia $OUTDIR 
     
