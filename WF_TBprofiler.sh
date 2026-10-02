@@ -15,7 +15,7 @@
 #Exit on error immediatley 
 set -e
 
-OUTDIR=/scratch/nf26742/rerun_2025/job_47709570
+OUTDIR=/scratch/nf26742/rerun_2025/job_48673716
 
 #Tells the program to make the ourdir folder if it cant find it
 if [ ! -d $OUTDIR ] 
