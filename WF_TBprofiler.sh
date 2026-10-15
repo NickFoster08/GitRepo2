@@ -37,4 +37,4 @@ bactopia \
     --wf tbprofiler \
     --exclude $OUTDIR/bactopia-exclude.tsv \
     --bactopia $OUTDIR \
-    --spoligotype
+    --tbprofiler_opts "--spoligotype"
