@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=IQTREE_EUR_AFR_BOVIS     # Job name
+#SBATCH --job-name=_Full_IQTREE_EUR_AFR_BOVIS     # Job name
 #SBATCH --partition=batch_30d    # Partition (queue) name
 #SBATCH --ntasks=1                  # Run on a single CPU
 #SBATCH --cpus-per-task=32     #number of cores per task
@@ -13,7 +13,7 @@
 
 set -e
 
-OUTDIR=/scratch/nf26742/rerun_2025/job_48673716/bactopia-runs/snippy-20261002-131410/IQTree_NOREF/ASC_Run
+OUTDIR=/scratch/nf26742/rerun_2025/job_48673716/bactopia-runs/snippy-20261002-131410/IQTree_NOREF
 
 # Make sure the output directory exists
 mkdir -p $OUTDIR
@@ -33,7 +33,7 @@ module load IQ-TREE/3.0.1-gompi-2024a
 # Run IQ-TREE with outputs going into the clean folder
 iqtree3 \
  -s core-snp.no-reference.aln \
- -m MFP+ASC \
+ -m MFP \
  -nt 32 \
  -pre "$OUTDIR/iqtree_noref"
 
