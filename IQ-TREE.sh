@@ -1,10 +1,10 @@
 #!/bin/bash
-#SBATCH --job-name=_Full_IQTREE_EUR_AFR_BOVIS     # Job name
-#SBATCH --partition=batch_30d    # Partition (queue) name
+#SBATCH --job-name=VAR+ASC_IQTREE_EUR_AFR_BOVIS     # Job name
+#SBATCH --partition=batch    # Partition (queue) name
 #SBATCH --ntasks=1                  # Run on a single CPU
 #SBATCH --cpus-per-task=32     #number of cores per task
-#SBATCH --mem=500gb                  # Job memory request
-#SBATCH --time=21-00:00:00               # Time limit hrs:min:sec
+#SBATCH --mem=300gb                  # Job memory request
+#SBATCH --time=07:00:00:00               # Time limit hrs:min:sec
 #SBATCH --output=/scratch/nf26742/scratch/log.%j.out    # Standard output log
 #SBATCH --error=/scratch/nf26742/scratch/log.%j.err     # Standard error log
 
