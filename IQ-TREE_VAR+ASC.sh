@@ -34,7 +34,7 @@ module load IQ-TREE/3.0.1-gompi-2024a
 iqtree3 \
  -s core-snp.aln \
  -m MFP \
- -nt 32 \
+ -nt 16 \
  -pre "$OUTDIR/iqtree_FULL"
 
 
