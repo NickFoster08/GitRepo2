@@ -35,6 +35,7 @@ iqtree3 \
  -s core-snp.aln \
  -m MFP+ASC \
  -nt 8 \
- -pre "$OUTDIR/iqtree_FULL"
+ -pre "$OUTDIR/iqtree_ASC" \
+ -redo
 
 
