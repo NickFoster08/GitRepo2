@@ -22,7 +22,7 @@ mkdir -p $OUTDIR
 cd /scratch/nf26742/rerun_2025/job_48673716/bactopia-runs/snippy-20261002-131410/IQTree_NOREF/ASC_Run
 
 # Check that the cleaned alignment exists
-if [ ! -f iqtree_ASC_GTRG4.varsites.ph ]; then
+if [ ! -f iqtree_ASC_GTRG4.varsites.phy ]; then
     echo "Error: aln not found in this folder"
     exit 1
 fi
@@ -32,7 +32,7 @@ module load IQ-TREE/3.0.1-gompi-2024a
 
 # Run IQ-TREE with outputs going into the clean folder
 iqtree3 \
- -s iqtree_ASC_GTRG4.varsites.ph\
+ -s iqtree_ASC_GTRG4.varsites.phy\
  -m MFP+ASC \
  -mset JC,HKY,GTR \
  -nt 8 \
@@ -41,7 +41,7 @@ iqtree3 \
  || {
   echo "ModelFinder failed, falling back to GTR+ASC+G4" >&2
   iqtree3 \
-   -s iqtree_ASC_GTRG4.varsites.ph\
+   -s iqtree_ASC_GTRG4.varsites.phy\
    -m GTR+ASC+G4 \
    -B 1000 --bnni \
    -nt 8 \
