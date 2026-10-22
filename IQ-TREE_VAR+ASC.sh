@@ -22,7 +22,7 @@ mkdir -p $OUTDIR
 cd /scratch/nf26742/rerun_2025/job_48673716/bactopia-runs/snippy-20261002-131410/snippy-core
 
 # Check that the cleaned alignment exists
-if [ ! -f core-snp.aln  ]; then
+if [ ! -f core-snp.nrnc.aln ]; then
     echo "Error: aln not found in this folder"
     exit 1
 fi
@@ -32,7 +32,7 @@ module load IQ-TREE/3.0.1-gompi-2024a
 
 # Run IQ-TREE with outputs going into the clean folder
 iqtree3 \
- -s core-snp.aln \
+ -s core-snp.nrnc.aln \
  -m MFP+ASC \
  -mset JC,HKY,GTR \
  -nt 8 \
@@ -41,7 +41,7 @@ iqtree3 \
  || {
   echo "ModelFinder failed, falling back to GTR+ASC+G4" >&2
   iqtree3 \
-   -s core-snp.aln \
+   -s core-snp.nrnc.aln\
    -m GTR+ASC+G4 \
    -B 1000 --bnni \
    -nt 8 \
