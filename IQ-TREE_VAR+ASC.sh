@@ -3,8 +3,8 @@
 #SBATCH --partition=batch   # Partition (queue) name
 #SBATCH --ntasks=1                  # Run on a single CPU
 #SBATCH --cpus-per-task=8     #number of cores per task
-#SBATCH --mem=200gb                  # Job memory request
-#SBATCH --time=07-00:00:00           # Time limit hrs:min:sec
+#SBATCH --mem=80gb                  # Job memory request
+#SBATCH --time=01-00:00:00           # Time limit hrs:min:sec
 #SBATCH --output=/scratch/nf26742/scratch/log.%j.out    # Standard output log
 #SBATCH --error=/scratch/nf26742/scratch/log.%j.err     # Standard error log
 
@@ -34,8 +34,19 @@ module load IQ-TREE/3.0.1-gompi-2024a
 iqtree3 \
  -s core-snp.aln \
  -m MFP+ASC \
+ -mset JC,HKY,GTR \
  -nt 8 \
  -pre "$OUTDIR/iqtree_ASC" \
- -redo
+ -redo \
+ || {
+  echo "ModelFinder failed, falling back to GTR+ASC+G4" >&2
+  iqtree3 \
+   -s core-snp.aln \
+   -m GTR+ASC+G4 \
+   -B 1000 --bnni \
+   -nt 8 \
+   -pre "$OUTDIR/iqtree_ASC_GTRG4" \
+   -redo
+}
 
 
