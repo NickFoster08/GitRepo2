@@ -2,8 +2,8 @@
 #SBATCH --job-name=VAR+ASC_IQTREE_EUR_AFR_BOVIS     # Job name
 #SBATCH --partition=batch   # Partition (queue) name
 #SBATCH --ntasks=1                  # Run on a single CPU
-#SBATCH --cpus-per-task=16     #number of cores per task
-#SBATCH --mem=300gb                  # Job memory request
+#SBATCH --cpus-per-task=8     #number of cores per task
+#SBATCH --mem=200gb                  # Job memory request
 #SBATCH --time=07-00:00:00           # Time limit hrs:min:sec
 #SBATCH --output=/scratch/nf26742/scratch/log.%j.out    # Standard output log
 #SBATCH --error=/scratch/nf26742/scratch/log.%j.err     # Standard error log
@@ -34,7 +34,7 @@ module load IQ-TREE/3.0.1-gompi-2024a
 iqtree3 \
  -s core-snp.aln \
  -m MFP+ASC \
- -nt 16 \
+ -nt 8 \
  -pre "$OUTDIR/iqtree_FULL"
 
 
