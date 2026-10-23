@@ -19,7 +19,7 @@ OUTDIR=/scratch/nf26742/rerun_2025/job_48673716/bactopia-runs/snippy-20261002-13
 mkdir -p $OUTDIR
 
 # Move to the folder containing the alignment
-cd /scratch/nf26742/rerun_2025/job_48673716/bactopia-runs/snippy-20261002-131410/IQTree_NOREF/ASC_Run/iqtree_ASC_GTRG4.varsites.phy
+cd /scratch/nf26742/rerun_2025/job_48673716/bactopia-runs/snippy-20261002-131410/IQTree_NOREF/ASC_Run
 
 # Check that the cleaned alignment exists
 if [ ! -f iqtree_ASC_GTRG4.varsites.phy ]; then
