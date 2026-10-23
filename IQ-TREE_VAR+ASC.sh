@@ -45,7 +45,7 @@ iqtree3 \
    -m GTR+ASC+G4 \
    -B 1000 --bnni \
    -nt 8 \
-   -pre "$OUTDIR/iqtree_ASC_GTRG4" \
+   -pre "$OUTDIR/iqtree_ASC_GTRG4_run2" \
    -redo
 }
 
