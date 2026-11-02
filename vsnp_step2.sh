@@ -13,7 +13,7 @@
 
 set -euo pipefail
 
-BASE_OUTDIR="/scratch/nf26742/rerun_2025/job_42492593"
+BASE_OUTDIR="/scratch/nf26742/rerun_2025/job_"
 
 module load vSNP3/3.31
 

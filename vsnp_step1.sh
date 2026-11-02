@@ -1,10 +1,10 @@
 #!/bin/bash
-#SBATCH --job-name=VSNP_STEP1_USA        # Job name
-#SBATCH --partition=batch             # Partition (queue) name
-#SBATCH --ntasks=1                    # Run on a single CPU
-#SBATCH --cpus-per-task=4             #number of cores per task
-#SBATCH --mem=40GB                     # Job memory request
-#SBATCH --time=04-00:00:00               # Time limit hrs:min:sec
+#SBATCH --job-name=VSNP_STEP1_Afr_Euro        # Job name
+#SBATCH --partition=batch_30d             # Partition (queue) name
+#SBATCH --ntasks=1                  # Run on a single CPU
+#SBATCH --cpus-per-task=16       #number of cores per task
+#SBATCH --mem=300gb                   # Job memory request
+#SBATCH --time=14-0:00:00               # Time limit hrs:min:sec
 #SBATCH --output=/scratch/nf26742/scratch/log.%j.out    # Standard output log
 #SBATCH --error=/scratch/nf26742/scratch/log.%j.err     # Standard error log
 
@@ -15,7 +15,7 @@ set -euo pipefail
 
 OUTDIR="/scratch/nf26742/rerun_2025/job_${SLURM_JOB_ID}"
 REFERENCE="/home/nf26742/vsnp3_test_dataset/vsnp_dependencies/Mycobacterium_AF2122"
-FASTQ_DIR="/scratch/nf26742/USA_Bovis_Human"
+FASTQ_DIR="/scratch/nf26742/rerun_2025/job_47709570/PDA_Select_Genomes"
 
 module load vSNP3/3.31
 
