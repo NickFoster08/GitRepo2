@@ -13,7 +13,7 @@
 
 set -e
 
-OUTDIR=/scratch/nf26742/rerun_2025/job_48673716/bactopia-runs/snippy-20261002-131410/IQTree_NOREF/FULL/NOREF/NOCannettii
+OUTDIR=/scratch/nf26742/rerun_2025/job_48673716/bactopia-runs/snippy-20261002-131410/IQTree_NOREF/FULL/NOREF/NOCannettii/HKY
 
 # Make sure the output directory exists
 mkdir -p $OUTDIR
@@ -35,6 +35,6 @@ iqtree3 \
  -s core-snp-variable-raw.filtered.aln \
  -m HKY+G4 \
  -nt 32 \
- -pre "$OUTDIR/iqtree_FULL_NOREF_NoCannettii"
+ -pre "$OUTDIR/iqtree_FULL_NOREF_NoCannettii_HKY"
 
 
