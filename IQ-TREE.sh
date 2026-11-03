@@ -13,16 +13,16 @@
 
 set -e
 
-OUTDIR=/scratch/nf26742/rerun_2025/job_48673716/bactopia-runs/snippy-20261002-131410/IQTree_NOREF/FULL/NOREF
+OUTDIR=/scratch/nf26742/rerun_2025/job_48673716/bactopia-runs/snippy-20261002-131410/IQTree_NOREF/FULL/NOREF/NOCannettii
 
 # Make sure the output directory exists
 mkdir -p $OUTDIR
 
 # Move to the folder containing the alignment
-cd /scratch/nf26742/rerun_2025/job_48673716/bactopia-runs/snippy-20261002-131410/
+cd /scratch/nf26742/rerun_2025/job_47709570/bactopia-runs/snippy-20260914-163539
 
 # Check that the cleaned alignment exists
-if [ ! -f  core.snp.full.nrnc.noREF.aln ]; then
+if [ ! -f  core-snp-variable-raw.filtered.aln ]; then
     echo "Error: aln not found in this folder"
     exit 1
 fi
@@ -32,9 +32,9 @@ module load IQ-TREE/3.0.1-gompi-2024a
 
 # Run IQ-TREE with outputs going into the clean folder
 iqtree3 \
- -s core.snp.full.nrnc.noREF.aln \
- -m MFP \
+ -s core-snp-variable-raw.filtered.aln \
+ -m HKY+G4 \
  -nt 32 \
- -pre "$OUTDIR/iqtree_FULL_NOREF"
+ -pre "$OUTDIR/iqtree_FULL_NOREF_NoCannettii"
 
 
