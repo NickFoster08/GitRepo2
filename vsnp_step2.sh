@@ -13,34 +13,16 @@
 
 set -euo pipefail
 
-BASE_OUTDIR="/scratch/nf26742/rerun_2025/job_49689386"
+VCF_DIR="/scratch/nf26742/rerun_2025/job_49689386"
 
 module load vSNP3/3.31
 
-if [[ ! -d "$BASE_OUTDIR" ]]; then
-    echo "Error: Step1 output directory not found: $BASE_OUTDIR"
+if [[ ! -d "$VCF_DIR" ]]; then
+    echo "Error: VCF directory not found: $VCF_DIR"
     exit 1
 fi
 
-shopt -s nullglob
+cd "$VCF_DIR"
+vsnp3_step2.py -a -t Mycobacterium_AF2122
 
-SAMPLE_DIRS=("$BASE_OUTDIR"/*)
-
-if (( ${#SAMPLE_DIRS[@]} == 0 )); then
-    echo "Error: No sample directories found in $BASE_OUTDIR"
-    exit 1
-fi
-
-for SAMPLE_DIR in "$BASE_OUTDIR"/*; do
-    [[ -d "$SAMPLE_DIR" ]] || continue
-
-    echo "Running step2 on: $(basename "$SAMPLE_DIR")"
-
-    (
-        cd "$SAMPLE_DIR" || exit 1
-        vsnp3_step2.py
-    )
-done
-
-
-echo "vSNP step2 completed for all samples."
+echo "vSNP step2 completed."
