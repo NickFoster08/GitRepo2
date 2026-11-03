@@ -3,7 +3,7 @@
 #SBATCH --partition=batch             # Partition (queue) name
 #SBATCH --ntasks=1                    # Run on a single CPU
 #SBATCH --cpus-per-task=4             #number of cores per task
-#SBATCH --mem=40GB                     # Job memory request
+#SBATCH --mem=400GB                     # Job memory request
 #SBATCH --time=04-00:00:00               # Time limit hrs:min:sec
 #SBATCH --output=/scratch/nf26742/scratch/log.%j.out    # Standard output log
 #SBATCH --error=/scratch/nf26742/scratch/log.%j.err     # Standard error log
@@ -13,7 +13,7 @@
 
 set -euo pipefail
 
-BASE_OUTDIR="/scratch/nf26742/rerun_2025/job_"
+BASE_OUTDIR="/scratch/nf26742/rerun_2025/job_49689386"
 
 module load vSNP3/3.31
 
