@@ -1,9 +1,9 @@
 #!/bin/bash
-#SBATCH --job-name=vSNP_STEP2_USA        # Job name
+#SBATCH --job-name=vSNP_STEP2_AFREURO       # Job name
 #SBATCH --partition=batch             # Partition (queue) name
 #SBATCH --ntasks=1                    # Run on a single CPU
 #SBATCH --cpus-per-task=4             #number of cores per task
-#SBATCH --mem=400GB                     # Job memory request
+#SBATCH --mem=300GB                     # Job memory request
 #SBATCH --time=04-00:00:00               # Time limit hrs:min:sec
 #SBATCH --output=/scratch/nf26742/scratch/log.%j.out    # Standard output log
 #SBATCH --error=/scratch/nf26742/scratch/log.%j.err     # Standard error log
