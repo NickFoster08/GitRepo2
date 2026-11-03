@@ -33,7 +33,8 @@ module load IQ-TREE/3.0.1-gompi-2024a
 # Run IQ-TREE with outputs going into the clean folder
 iqtree3 \
  -s core-snp-variable-raw.filtered.aln \
- -m HKY+G4 \
+ -mset fast \
+ -m mfp \
  -nt 32 \
  -pre "$OUTDIR/iqtree_FULL_NOREF_NoCannettii"
 
