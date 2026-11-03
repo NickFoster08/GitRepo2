@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=FULL_IQTREE_EUR_AFR_BOVIS     # Job name
+#SBATCH --job-name=MFP_FULL_IQTREE_EUR_AFR_BOVIS     # Job name
 #SBATCH --partition=highmem_30d_p   # Partition (queue) name
 #SBATCH --ntasks=1                  # Run on a single CPU
 #SBATCH --cpus-per-task=32     #number of cores per task
