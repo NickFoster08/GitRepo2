@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=MFP_FULL_IQTREE_EUR_AFR_BOVIS     # Job name
+#SBATCH --job-name=HKY_FULL_IQTREE_EUR_AFR_BOVIS     # Job name
 #SBATCH --partition=highmem_30d_p   # Partition (queue) name
 #SBATCH --ntasks=1                  # Run on a single CPU
 #SBATCH --cpus-per-task=32     #number of cores per task
@@ -33,8 +33,7 @@ module load IQ-TREE/3.0.1-gompi-2024a
 # Run IQ-TREE with outputs going into the clean folder
 iqtree3 \
  -s core-snp-variable-raw.filtered.aln \
- -mset fast \
- -m mfp \
+ -m HKY+G4 \
  -nt 32 \
  -pre "$OUTDIR/iqtree_FULL_NOREF_NoCannettii"
 
