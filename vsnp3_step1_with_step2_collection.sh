@@ -1,13 +1,16 @@
-
 #!/bin/bash
-#SBATCH --job-name=VSNP_STEP1_Afr_Euro
-#SBATCH --cpus-per-task=16
-#SBATCH --mem=300gb
-#SBATCH --time=14-0:00:00
-#SBATCH --output=/scratch/nf26742/scratch/log.%j.out
-#SBATCH --error=/scratch/nf26742/scratch/log.%j.err
-#SBATCH --mail-type=END,FAIL
-#SBATCH --mail-user=nf26742@uga.edu
+#SBATCH --job-name=VSNP_STEP1_Afr_Euro        # Job name
+#SBATCH --partition=batch_30d             # Partition (queue) name
+#SBATCH --ntasks=1                  # Run on a single CPU
+#SBATCH --cpus-per-task=16       #number of cores per task
+#SBATCH --mem=300gb                   # Job memory request
+#SBATCH --time=14-0:00:00               # Time limit hrs:min:sec
+#SBATCH --output=/scratch/nf26742/scratch/log.%j.out    # Standard output log
+#SBATCH --error=/scratch/nf26742/scratch/log.%j.err     # Standard error log
+
+#SBATCH --mail-type=END,FAIL          # Mail events (NONE, BEGIN, END, FAIL, ALL)
+#SBATCH --mail-user=nf26742@uga.edu  # Where to send mail (change username@uga.edu to your email address)
+
 
 set -euo pipefail
 
