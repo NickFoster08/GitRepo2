@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=Force_tbprofiler_Med_Bovis
+#SBATCH --job-name=Force_tbprofiler_All_Bovis
 #SBATCH --partition=batch
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=8
@@ -12,13 +12,13 @@
 
 module load TB-Profiler/6.6.5
 
-FASTQDIR=/scratch/nf26742/rerun_2025/job_47709570/PDA_Select_Genomes
-OUTBASE=/scratch/nf26742/rerun_2025/job_48673716/bactopia-runs
+FASTQDIR=/scratch/nf26742/Mbovis_Africa_Europe
+OUTBASE=/scratch/nf26742/Mbovis_Africa_Europe/TBProfiler_ALL
 
 cd "$OUTBASE" || exit 1
 
-mkdir -p TBProfiler_results
-cd TBProfiler_results3 || exit 1
+mkdir -p TBProfiler_ALL
+cd TBProfiler_ALL || exit 1
 
 for fq1 in "$FASTQDIR"/*_1.fastq.gz; do
     fq2="${fq1/_1.fastq.gz/_2.fastq.gz}"
@@ -43,5 +43,5 @@ done
 cd "$OUTBASE" || exit 1
 
 tb-profiler collate \
-  --dir TBProfiler_results \
-  --prefix PDA_Med_Bovis
+  --dir TBProfiler_ALL \
+  --prefix ALL_Bovis
