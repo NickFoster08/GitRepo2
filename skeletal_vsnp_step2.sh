@@ -11,15 +11,24 @@
 #SBATCH --mail-type=END,FAIL          # Mail events (NONE, BEGIN, END, FAIL, ALL)
 #SBATCH --mail-user=nf26742@uga.edu  # Where to send mail (change username@uga.edu to your email address)
 
-
 set -euo pipefail
 
-OUTDIR="/scratch/nf26742/rerun_2025/job_50146673"
+STEP1_DIR="/scratch/nf26742/rerun_2025/job_50148622"
+STEP2_DIR="/scratch/nf26742/rerun_2025/step2_${SLURM_JOB_ID}"
 REFERENCE="/home/nf26742/vsnp3_test_dataset/vsnp_dependencies/Mycobacterium_AF2122"
 
 module load vSNP3/3.31
 
-cd /scratch/nf26742/rerun_2025/job_50146673
+mkdir -p "$STEP2_DIR"
 
-vsnp3_step2.py -a -t Mycobacterium_AF2122
-  
+# Gather one zero-coverage VCF per sample into a flat directory
+cp "$STEP1_DIR"/*/alignment_*/*_zc.vcf "$STEP2_DIR"/
+
+n=$(ls "$STEP2_DIR"/*_zc.vcf | wc -l)
+echo "Collected $n VCFs"
+if [[ "$n" -ne 496 ]]; then
+    echo "WARNING: expected 496 VCFs, found $n" >&2
+fi
+
+cd "$STEP2_DIR"
+vsnp3_step2.py -a -t "$REFERENCE"
