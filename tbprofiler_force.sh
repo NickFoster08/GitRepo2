@@ -4,7 +4,7 @@
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=8
 #SBATCH --mem=300GB
-#SBATCH --time=07:00:00
+#SBATCH --time=07:00:00:00
 #SBATCH --output=/scratch/nf26742/scratch/log.%j.out
 #SBATCH --error=/scratch/nf26742/scratch/log.%j.err
 #SBATCH --mail-type=END,FAIL
@@ -13,7 +13,7 @@
 module load TB-Profiler/6.6.5
 
 FASTQDIR=/scratch/nf26742/Mbovis_Africa_Europe
-OUTBASE=/scratch/nf26742/Mbovis_Africa_Europe/TBProfiler_ALL
+OUTBASE=/scratch/nf26742/Mbovis_Africa_Europe/TBProfiler_All
 
 cd "$OUTBASE" || exit 1
 
@@ -35,7 +35,7 @@ for fq1 in "$FASTQDIR"/*_1.fastq.gz; do
     tb-profiler profile \
         -1 "$fq1" \
         -2 "$fq2" \
-        -t 4 \
+        -t 8 \
         -p "$prefix" \
         --spoligotype
 done
