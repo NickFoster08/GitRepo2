@@ -1,10 +1,10 @@
 #!/bin/bash
 #SBATCH --job-name=VSNP_STEP2        # Job name
-#SBATCH --partition=batch_30d             # Partition (queue) name
+#SBATCH --partition=batch             # Partition (queue) name
 #SBATCH --ntasks=1                  # Run on a single CPU
 #SBATCH --cpus-per-task=8       #number of cores per task
-#SBATCH --mem=300gb                   # Job memory request
-#SBATCH --time=14-0:00:00               # Time limit hrs:min:sec
+#SBATCH --mem=150gb                   # Job memory request
+#SBATCH --time=07-0:00:00               # Time limit hrs:min:sec
 #SBATCH --output=/scratch/nf26742/scratch/log.%j.out    # Standard output log
 #SBATCH --error=/scratch/nf26742/scratch/log.%j.err     # Standard error log
 
@@ -21,10 +21,17 @@ module load vSNP3/3.31
 
 mkdir -p "$STEP2_DIR"
 
-# Gather one zero-coverage VCF per sample into a flat directory
-cp "$STEP1_DIR"/*/alignment_*/*_zc.vcf "$STEP2_DIR"/
-
-n=$(ls "$STEP2_DIR"/*_zc.vcf | wc -l)
+# Gather one zero-coverage VCF per sample, renamed to the full sample name
+shopt -s nullglob
+n=0
+for d in "$STEP1_DIR"/*/; do
+    s=$(basename "$d")
+    [[ -f "$d/.done" ]] || { echo "skipping $s (no .done)" >&2; continue; }
+    for v in "$d"alignment_*/*_zc.vcf; do
+        cp "$v" "$STEP2_DIR/${s}_zc.vcf"
+        n=$((n+1))
+    done
+done
 echo "Collected $n VCFs"
 if [[ "$n" -ne 496 ]]; then
     echo "WARNING: expected 496 VCFs, found $n" >&2
