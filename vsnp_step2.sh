@@ -56,7 +56,8 @@ sys.argv = [
     "vsnp3_step2.py",
     "-a",
     "-t",
-    "Mycobacterium_AF2122"
+    "Mycobacterium_AF2122",
+    "-k"
 ]
 
 runpy.run_path(
