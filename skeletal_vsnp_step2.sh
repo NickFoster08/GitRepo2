@@ -38,4 +38,4 @@ if [[ "$n" -ne 496 ]]; then
 fi
 
 cd "$STEP2_DIR"
-vsnp3_step2.py -a -t "$REFERENCE"
+vsnp3_step2.py -a -t Mycobacterium_AF2122
