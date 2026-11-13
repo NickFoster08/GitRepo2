@@ -2,8 +2,8 @@
 #SBATCH --job-name=VSNP_STEP1        # Job name
 #SBATCH --partition=batch            # Partition (queue) name
 #SBATCH --ntasks=1                  # Run on a single CPU
-#SBATCH --cpus-per-task=4      #number of cores per task
-#SBATCH --mem=200gb                   # Job memory request
+#SBATCH --cpus-per-task=8      #number of cores per task
+#SBATCH --mem=100gb                   # Job memory request
 #SBATCH --time=07-0:00:00               # Time limit hrs:min:sec
 #SBATCH --output=/scratch/nf26742/scratch/log.%j.out    # Standard output log
 #SBATCH --error=/scratch/nf26742/scratch/log.%j.err     # Standard error log
@@ -45,6 +45,7 @@ for r1 in *_1.fastq.gz; do
     if vsnp3_step1.py \
         -r1 "$r1" \
         -r2 "$r2" \
+        -n "$sample" \
         -b "$GBK_file" \
         -t "$REFERENCE" \
         -o "$OUTDIR/$sample" \
