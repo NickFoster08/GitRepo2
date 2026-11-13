@@ -17,6 +17,8 @@ VCF_DIR="/scratch/nf26742/rerun_2025/job_50080262/step2_vcfs"
 
 module load vSNP3/3.31
 
+export PYTHONPATH="/scratch/nf26742:/apps/eb/vSNP3/3.31/bin:${PYTHONPATH:-}"
+
 if [[ ! -d "$VCF_DIR" ]]; then
     echo "Error: VCF directory not found: $VCF_DIR"
     exit 1
