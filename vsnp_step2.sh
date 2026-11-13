@@ -24,6 +24,22 @@ if [[ ! -d "$VCF_DIR" ]]; then
     exit 1
 fi
 
+VCF_COUNT=$(find "$VCF_DIR" -maxdepth 1 -type l -name '*_zc.vcf' | wc -l)
+BROKEN_COUNT=$(find "$VCF_DIR" -maxdepth 1 -type l -name '*_zc.vcf' ! -exec test -e {} \; | wc -l)
+
+echo "VCF symlinks found: $VCF_COUNT"
+echo "Broken symlinks: $BROKEN_COUNT"
+
+if [[ "$VCF_COUNT" -eq 0 ]]; then
+    echo "ERROR: No VCF symlinks found. Step 2 will not run."
+    exit 1
+fi
+
+if [[ "$BROKEN_COUNT" -ne 0 ]]; then
+    echo "ERROR: Broken VCF symlinks detected."
+    exit 1
+fi
+
 cd "$VCF_DIR"
 vsnp3_step2.py -a -t Mycobacterium_AF2122
 
