@@ -13,7 +13,7 @@
 
 set -euo pipefail
 
-VCF_DIR="/scratch/nf26742/rerun_2025/job_49689386"
+VCF_DIR="/scratch/nf26742/rerun_2025/job_50080262/step2_vcfs"
 
 module load vSNP3/3.31
 
