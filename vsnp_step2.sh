@@ -41,6 +41,28 @@ if [[ "$BROKEN_COUNT" -ne 0 ]]; then
 fi
 
 cd "$VCF_DIR"
-vsnp3_step2.py -a -t Mycobacterium_AF2122
+python -c '
+import sys, runpy
+
+sys.path.insert(0, "/scratch/nf26742")
+import vsnp3_group_on_defining_snps
+
+print("Loaded module from:", vsnp3_group_on_defining_snps.__file__)
+
+if vsnp3_group_on_defining_snps.__file__ != "/scratch/nf26742/vsnp3_group_on_defining_snps.py":
+    raise RuntimeError("ERROR: Patched vSNP3 module was not loaded.")
+
+sys.argv = [
+    "vsnp3_step2.py",
+    "-a",
+    "-t",
+    "Mycobacterium_AF2122"
+]
+
+runpy.run_path(
+    "/apps/eb/vSNP3/3.31/bin/vsnp3_step2.py",
+    run_name="__main__"
+)
+'
 
 echo "vSNP step2 completed."
