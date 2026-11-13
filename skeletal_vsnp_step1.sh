@@ -22,7 +22,7 @@ module load vSNP3/3.31
 cd /scratch/nf26742/rerun_2025/job_47709570/PDA_Select_Genomes
 
 vsnp3_step1.py \
-    -r1 "*_1.fastq.gz" \
+    -r1 "_1.fastq.gz" \
     -r2 "_2.fastq.gz" \
     -t "$REFERENCE" \
     -o "$OUTDIR" \
