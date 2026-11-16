@@ -15,7 +15,7 @@ set -euo pipefail
 
 STEP1_DIR="/scratch/nf26742/rerun_2025/job_50148622"
 STEP2_DIR="/scratch/nf26742/rerun_2025/step2_${SLURM_JOB_ID}"
-REFERENCE="/home/nf26742/vsnp3_test_dataset/vsnp_dependencies/Mycobacterium_AF2122"
+DEPS="/home/nf26742/vsnp3_test_dataset/vsnp_dependencies/Mycobacterium_AF2122"
 
 module load vSNP3/3.31
 
@@ -38,4 +38,8 @@ if [[ "$n" -ne 496 ]]; then
 fi
 
 cd "$STEP2_DIR"
-vsnp3_step2.py -a -t Mycobacterium_AF2122
+vsnp3_step2.py -a \
+    -wd "$STEP2_DIR" \
+    -s "$DEPS/Mbovis_define_filter.xlsx" \
+    -m "$DEPS/Mbovis_metadata.xlsx" \
+    -b "$DEPS/NC_002945v4.gbk"
