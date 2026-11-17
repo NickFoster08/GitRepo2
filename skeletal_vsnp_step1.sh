@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=VSNP_STEP1        # Job name
+#SBATCH --job-name=vSNP_STEP1        # Job name
 #SBATCH --partition=batch_30d            # Partition (queue) name
 #SBATCH --ntasks=1                  # Run on a single CPU
 #SBATCH --cpus-per-task=16      #number of cores per task
