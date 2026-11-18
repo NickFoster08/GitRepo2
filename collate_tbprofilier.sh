@@ -13,4 +13,4 @@
 
 module load TB-Profiler/6.6.5
 cd /scratch/nf26742/Mbovis_Africa_Europe/TBProfiler_All
-tb-profiler collate --prefix ALL_Bovis --dir TBProfiler_ALL/results
+tb-profiler collate --prefix ALL_Bovis2 --dir TBProfiler_ALL/results
