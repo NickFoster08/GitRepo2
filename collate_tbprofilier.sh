@@ -2,8 +2,8 @@
 #SBATCH --job-name=tbp_collate
 #SBATCH --partition=batch            # Partition (queue) name
 #SBATCH --ntasks=1                  # Run on a single CPU
-#SBATCH --cpus-per-task=16      #number of cores per task
-#SBATCH --mem=20gb                   # Job memory request
+#SBATCH --cpus-per-task=1      #number of cores per task
+#SBATCH --mem=10gb                   # Job memory request
 #SBATCH --time=04:00:00               # Time limit hrs:min:sec
 #SBATCH --output=/scratch/nf26742/scratch/log.%j.out    # Standard output log
 #SBATCH --error=/scratch/nf26742/scratch/log.%j.err     # Standard error log

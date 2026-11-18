@@ -43,5 +43,6 @@ done
 cd "$OUTBASE" || exit 1
 
 tb-profiler collate \
-  --dir TBProfiler_ALL \
-  --prefix ALL_Bovis
+  --dir TBProfiler_ALL/results \
+  --prefix ALL_Bovis \
+  --logging INFO
